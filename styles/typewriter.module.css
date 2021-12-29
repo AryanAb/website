@@ -1,0 +1,7 @@
+.typewriter {
+	padding-top: 1.5%;
+	font-family: 'Hack', monospace;
+	font-size: 3.5vw;
+	display: flex;
+	justify-content: center;
+}

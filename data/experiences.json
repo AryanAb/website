@@ -1,0 +1,16 @@
+{
+	"experiences": [
+		{
+			"company": "Capital One",
+			"image": "/../public/images/C1.png",
+			"position": "Software Developer Intern",
+			"date": "Jan. 2022 - Present"
+		},
+		{
+			"company": "OpenText",
+			"image": "/../public/images/opentext.png",
+			"position": "Software Developer Intern",
+			"date": "May 2021 - Sept. 2021"
+		}
+	]
+}

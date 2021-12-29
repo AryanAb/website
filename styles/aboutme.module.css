@@ -1,0 +1,6 @@
+.aboutme p {
+  display: flex;
+  justify-content: center;
+  margin-left: 3%;
+  margin-right: 3%;
+}
