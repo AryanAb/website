@@ -1,0 +1,44 @@
+.gridWrapper {
+	padding-left: 10%;
+	padding-right: 10%;
+	display: grid;
+	grid-template-columns: minmax(300px, 1fr);
+	justify-content: center;
+	gap: 2rem;
+}
+
+.container {
+	box-shadow: 0px 2px 8px 0px gray;
+	text-align: center;
+	border-radius: 1rem;
+	position: relative;
+}
+
+.banner {
+	border-bottom: 1px solid gray;
+}
+
+.title {
+	font-weight: 10;
+	font-size: 2rem;
+}
+
+.role {
+	font-weight: 350;
+}
+
+.date {
+	font-weight: 10;
+}
+
+@media screen and (min-width: 500px) {
+	.gridWrapper {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media screen and (min-width: 760px) {
+	.gridWrapper {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}

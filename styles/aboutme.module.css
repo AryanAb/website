@@ -1,6 +1,15 @@
-.aboutme p {
+.aboutme {
   display: flex;
-  justify-content: center;
-  margin-left: 3%;
-  margin-right: 3%;
+  margin-left: 12%;
+  margin-right: 10%;
+  margin-top: 7%;
+}
+
+.paragraph {
+  justify-content: flex-start;
+}
+
+.image {
+  justify-content: flex-end;
+  padding: 10;
 }

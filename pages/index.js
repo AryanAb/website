@@ -5,6 +5,7 @@ import Logos from '../components/Logos';
 import Title from '../components/Title';
 import AboutMe from '../components/AboutMe';
 import Experiences from '../components/Experiences';
+import Projects from '../components/Projects';
 
 import typewriterStyle from '../styles/typewriter.module.css';
 
@@ -29,8 +30,9 @@ export default function Home({ experiencesData }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <Navbar />
+      <Navbar />
+
+      <main style={{ marginTop: 80 }}>
 
         <div className={typewriterStyle.typewriter}>
           <Typewriter
@@ -42,11 +44,18 @@ export default function Home({ experiencesData }) {
 
         <Logos />
 
-        <Title str={"About Me"} />
         <AboutMe />
 
+        <div className={typewriterStyle.gap}></div>
         <Title str={"Experiences"} />
         <Experiences experiencesData={experiencesData} />
+
+        <Title str={"Selected Projects"} />
+        <Projects projectsData={""} />
+
+        <Title str={"Selected Blog Posts"} />
+
+        <Title str={"Toolchain"} />
       </main>
 
       <footer>
