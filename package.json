@@ -6,11 +6,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@mdx-js/loader": "^1.6.22",
+    "@next/mdx": "^12.0.7",
+    "gray-matter": "^4.0.3",
     "hack-font": "^3.3.0",
     "next": "latest",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-spring": "^9.3.3",
+    "react-waypoint": "^10.1.0",
     "typewriter-effect": "^2.18.2"
   }
 }

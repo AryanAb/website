@@ -6,23 +6,27 @@ import Title from '../components/Title';
 import AboutMe from '../components/AboutMe';
 import Experiences from '../components/Experiences';
 import Projects from '../components/Projects';
+import SelectedPosts from '../components/SelectedPosts';
 
 import typewriterStyle from '../styles/typewriter.module.css';
 
 import Typewriter from 'typewriter-effect';
 
 import { getExperiencesData } from '../lib/experiences';
+import { getSortedPostsData } from '../lib/posts';
 
 export async function getStaticProps() {
   const experiencesData = getExperiencesData();
+  const allPostsData = getSortedPostsData();
   return {
     props: {
-      experiencesData
+      experiencesData,
+      allPostsData
     }
   }
 };
 
-export default function Home({ experiencesData }) {
+export default function Home({ experiencesData, allPostsData }) {
   return (
     <div className="container">
       <Head>
@@ -54,6 +58,7 @@ export default function Home({ experiencesData }) {
         <Projects projectsData={""} />
 
         <Title str={"Selected Blog Posts"} />
+        <SelectedPosts posts={allPostsData} />
 
         <Title str={"Toolchain"} />
       </main>

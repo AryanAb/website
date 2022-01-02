@@ -1,8 +1,6 @@
-import Image from 'next/image';
-
 import aboutmeStyle from '../styles/aboutme.module.css';
 
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated } from 'react-spring';
 
 const AboutMe = () => {
   const parAnim = useSpring({ from: { x: -10000 }, to: { x: 0 } });
@@ -14,7 +12,7 @@ const AboutMe = () => {
         I love learning new stuff and I like working with other people. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum volutpat tortor quis sapien hendrerit, ac consectetur justo placerat. Donec feugiat ultricies nisl nec sollicitudin. Mauris quis egestas quam. In rhoncus libero nec mauris ullamcorper, ac egestas tortor congue.
       </animated.p>
       <animated.div className={aboutmeStyle.image} style={imgAnim}>
-        <Image src="/images/placeholder.png" width={508} height={400} />
+        <img src="/images/placeholder.png" style={{ width: 600 }} />
       </animated.div>
     </div>
   );

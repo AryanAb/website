@@ -1,0 +1,24 @@
+import Post from '../../components/Post'
+
+export const meta = {
+	title: 'Hello World!',
+	author: 'Aryan Abed-Esfahani',
+	date: '2022-01-01',
+	sections: ['Section 1', 'Section 2']
+}
+
+# Hello World
+
+## Section 1
+
+This is a list in markdown:
+
+- One
+- Two
+- Three
+
+## Section 2
+
+A bunch of more stuff
+
+export default ({children, meta}) => (<Post meta={meta}>{children}</Post>);

@@ -1,0 +1,14 @@
+.container {
+	background-color: gray;
+	height: 8px;
+	position: sticky;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+}
+
+.bar {
+	height: 8px;
+	background-color: cyan;
+}
