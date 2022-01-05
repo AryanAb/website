@@ -1,4 +1,6 @@
 import Post from '../../components/Post'
+import parseDate from '../../lib/parseDate';
+import BarChart from '../../components/BarChart';
 
 export const meta = {
 	title: 'Hello World!',
@@ -7,7 +9,9 @@ export const meta = {
 	sections: ['Section 1', 'Section 2']
 }
 
-# Hello World
+<h1>{meta.title}</h1>
+
+<p>{meta.author} - {parseDate(meta.date)}</p>
 
 ## Section 1
 
@@ -17,8 +21,16 @@ This is a list in markdown:
 - Two
 - Three
 
+### Subsection
+
+This is multineline. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin purus lorem, finibus non efficitur at, dictum eu neque. Maecenas tempus metus quis purus lacinia placerat. Proin ac sagittis neque, sed interdum sapien
+
 ## Section 2
 
-A bunch of more stuff
+A code block for test:
+
+```python
+print('Hello')
+```
 
 export default ({children, meta}) => (<Post meta={meta}>{children}</Post>);
