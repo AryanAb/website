@@ -5,7 +5,7 @@ import ScrollIndicator from "./ScrollIndicator";
 import Link from "next/link";
 import Head from "next/head";
 import { MDXProvider } from "@mdx-js/react";
-import { H1, H2, H3, H4, P } from "./PostParts";
+import { H1, H2, H3, H4, P, Img } from "./PostParts";
 
 const Post = ({ children, meta }) => {
   const components = {
@@ -13,7 +13,8 @@ const Post = ({ children, meta }) => {
     h2: H2,
     h3: H3,
     h4: H4,
-    p: P
+    p: P,
+    img: Img
   }
   return (
     <MDXProvider components={components}>

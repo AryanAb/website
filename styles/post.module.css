@@ -11,8 +11,7 @@
 	background-color: #fff;
 	width: 20%;
 	height: 100vh;
-	position: -webkit-sticky;
-	position: sticky;
+	position: fixed;
 	top: 8px;
 	padding: 0;
 }
@@ -29,6 +28,7 @@
 	background-color: #fff;
 	padding-left: 1.5%;
 	padding-right: 4%;
+	margin-left: 20%;
 }
 
 .sidenav ul {
@@ -141,4 +141,21 @@
 
 .p {
 	margin-top: 2px;
+}
+
+.img {
+	display: flex;
+	justify-content: center;	
+}
+
+.imgExtra {
+	display: flex;
+	flex-direction: column; 
+	justify-content: center;
+	align-items: center;
+}
+
+.imgExtra figcaption {
+	text-align: center;
+	color: rgba(0, 0, 0, 0.65);
 }

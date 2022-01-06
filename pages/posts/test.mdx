@@ -1,6 +1,6 @@
 import Post from '../../components/Post'
 import parseDate from '../../lib/parseDate';
-import BarChart from '../../components/BarChart';
+import {ImgExtra} from '../../components/PostParts';
 
 export const meta = {
 	title: 'Hello World!',
@@ -32,5 +32,12 @@ A code block for test:
 ```python
 print('Hello')
 ```
+
+and a random image for test:
+
+<!--![Image](/images/test.jpeg "Hello, World")-->
+<ImgExtra src="/images/test.jpeg" alt="Hello World" width={300} caption="Test Image" />
+
+and a random [link](https://www.reddit.com/) for test.
 
 export default ({children, meta}) => (<Post meta={meta}>{children}</Post>);
