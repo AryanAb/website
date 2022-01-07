@@ -34,37 +34,39 @@ export default function Home({ experiencesData, allPostsData }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar />
+      <body>
+        <Navbar />
 
-      <main style={{ marginTop: 80 }}>
+        <main style={{ marginTop: 80 }}>
 
-        <div className={typewriterStyle.typewriter}>
-          <Typewriter
-            onInit={(typewriter) => {
-              typewriter.typeString("Hi, I'm Aryan!").pauseFor("2000").deleteAll().typeString("Welcome to my website").pauseFor("2000").deleteAll().typeString("Enjoy :)").start();
-            }}
-          />
-        </div>
+          <div className={typewriterStyle.typewriter}>
+            <Typewriter
+              onInit={(typewriter) => {
+                typewriter.typeString("Hi, I'm Aryan!").pauseFor("2000").deleteAll().typeString("Welcome to my website").pauseFor("2000").deleteAll().typeString("Enjoy :)").start();
+              }}
+            />
+          </div>
 
-        <Logos />
+          <Logos />
 
-        <AboutMe />
+          <AboutMe />
 
-        <div className={typewriterStyle.gap}></div>
-        <Title str={"Experiences"} />
-        <Experiences experiencesData={experiencesData} />
+          <div className={typewriterStyle.gap}></div>
+          <Title str={"Experiences"} />
+          <Experiences experiencesData={experiencesData} />
 
-        <Title str={"Selected Projects"} />
-        <Projects projectsData={""} />
+          <Title str={"Selected Projects"} />
+          <Projects projectsData={""} />
 
-        <Title str={"Selected Blog Posts"} />
-        <SelectedPosts posts={allPostsData} />
+          <Title str={"Selected Blog Posts"} />
+          <SelectedPosts posts={allPostsData} />
 
-        <Title str={"Toolchain"} />
-      </main>
+          <Title str={"Toolchain"} />
+        </main>
 
-      <footer>
-      </footer>
+        <footer>
+        </footer>
+      </body>
     </div>
   )
 }

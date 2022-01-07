@@ -1,17 +1,31 @@
 import ContactForm from "../components/ContactForm";
 import Navbar from "../components/Navbar";
+import Title from "../components/Title";
+import SocialMedia from "../components/SocialMedia";
 
 const ContactMe = () => {
   return (
-    <>
+    <body>
       <Navbar />
-      <h1>Contact Me</h1>
-      <p>
-        Do you want to work on a project together? Do you have a question on anything? Do you have any feedback?
-        Do you want to schedule a coffee chat? Feel free to contact me for anything.
-      </p>
-      <ContactForm />
-    </>
+      <div style={{ marginTop: 80 }}>
+        <Title str="Contact Me" />
+        <div style={{ marginLeft: 140, marginRight: 140 }}>
+          <p>
+            Do you want to work on a project together? Do you have a question on anything? Do you have any feedback?
+            Do you want to schedule a coffee chat? Feel free to contact me for anything.
+          </p>
+          <ContactForm />
+        </div>
+        <Title str="Social Media" />
+        <div style={{ marginLeft: 140, marginRight: 140 }}>
+          <p>
+            You can also follow me on different social media. I'm not very active, but you might catch me posting something
+            here and there once in a while.
+          </p>
+          <SocialMedia />
+        </div>
+      </div>
+    </body>
   );
 };
 

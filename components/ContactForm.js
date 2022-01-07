@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+import formStyles from "../styles/contactme.module.css";
+
 const ContactForm = () => {
   const [status, setStatus] = useState({
     submitted: false,
@@ -62,21 +64,19 @@ const ContactForm = () => {
 
   return (
     <div>
-      <form onSubmit={handleOnSubmit}>
+      <form onSubmit={handleOnSubmit} className={formStyles.form}>
         <label htmlFor="email">Email</label>
-        <input id="email" name="_replyto" required type="email" onChange={handleOnChange} value={inputs.email} />
+        <input className={formStyles.textbox} id="email" name="_replyto" required type="email" onChange={handleOnChange} value={inputs.email} />
 
         <label htmlFor="subject">Subject</label>
-        <input id="subject" name="_subject" required type="text" onChange={handleOnChange} value={inputs.subject} />
+        <input className={formStyles.textbox} id="subject" name="_subject" required type="text" onChange={handleOnChange} value={inputs.subject} />
 
         <label htmlFor="message">Message</label>
-        <textarea id="message" name="message" required onChange={handleOnChange} value={inputs.message} />
+        <textarea className={formStyles.textarea} id="message" name="message" required onChange={handleOnChange} value={inputs.message} />
 
-        <button type="submit" disabled={status.submitting}>{!status.submitting ? !status.submitted ? 'Submit' : 'Submitted' : 'Submitting ...'}</button>
+        <button type="submit" disabled={status.submitting} className={formStyles.submit}>{!status.submitting ? !status.submitted ? 'SUBMIT' : 'SUBMITTED' : 'SUBMITTING ...'}</button>
       </form>
-      {status.info.error && (
-        <div className="error">Error: {status.info.msg}</div>
-      )}
+      {status.info.error && (<div className="error">Error: {status.info.msg}</div>)}
       {!status.info.error && status.info.msg && <p>{status.info.msg}</p>}
     </div>
   );

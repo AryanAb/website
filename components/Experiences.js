@@ -16,7 +16,7 @@ const Experiences = ({ experiencesData }) => {
   return (
     <Waypoint onEnter={() => setInView(true)}>
       <div className={cardStyles.gridWrapper}>
-        {experiencesData.experiences.map(experience => <animated.div style={{ display: 'no' }, cardsAnim}> <ExperienceCard image={experience.image} title={experience.company} role={experience.position} date={experience.date} /> </animated.div>)}
+        {experiencesData.experiences.map(experience => <ExperienceCard image={experience.image} title={experience.company} role={experience.position} date={experience.date} />)}
       </div>
     </Waypoint>
   );
