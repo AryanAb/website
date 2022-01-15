@@ -7,7 +7,10 @@ import Head from "next/head";
 import { MDXProvider } from "@mdx-js/react";
 import { H1, H2, H3, H4, P, Img } from "./PostParts";
 
+import { useRef } from 'react';
+
 const Post = ({ children, meta }) => {
+
   const components = {
     h1: H1,
     h2: H2,

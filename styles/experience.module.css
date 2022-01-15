@@ -19,11 +19,13 @@
 }
 
 .title {
+	margin-top: 0;
 	font-weight: 10;
 	font-size: 2rem;
 }
 
 .role {
+	margin-top: 0;
 	font-weight: 350;
 }
 
@@ -37,8 +39,8 @@
 	}
 }
 
-@media screen and (min-width: 760px) {
+@media screen and (min-width: 820px) {
 	.gridWrapper {
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 	}
 }

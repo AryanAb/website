@@ -1,9 +1,3 @@
-@font-face {
-	font-family: 'Hack';
-	src: local('Hack'), url(../public/fonts/hack-regular.woff) format('woff');
-}
-
-
 html,
 body {
   padding: 0;

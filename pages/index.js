@@ -7,6 +7,7 @@ import AboutMe from '../components/AboutMe';
 import Experiences from '../components/Experiences';
 import Projects from '../components/Projects';
 import SelectedPosts from '../components/SelectedPosts';
+import Toolchain from '../components/Toolchain';
 
 import typewriterStyle from '../styles/typewriter.module.css';
 
@@ -14,24 +15,33 @@ import Typewriter from 'typewriter-effect';
 
 import { getExperiencesData } from '../lib/experiences';
 import { getSortedPostsData } from '../lib/posts';
+import { getToolchainData } from '../lib/toolchain';
 
 export async function getStaticProps() {
   const experiencesData = getExperiencesData();
   const allPostsData = getSortedPostsData();
+  const toolchainData = getToolchainData();
   return {
     props: {
       experiencesData,
-      allPostsData
+      allPostsData,
+      toolchainData
     }
   }
 };
 
-export default function Home({ experiencesData, allPostsData }) {
+export default function Home({ experiencesData, allPostsData, toolchainData }) {
   return (
     <div className="container">
       <Head>
         <title>Aryan Abed-Esfahani</title>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+
       </Head>
 
       <body>
@@ -62,6 +72,7 @@ export default function Home({ experiencesData, allPostsData }) {
           <SelectedPosts posts={allPostsData} />
 
           <Title str={"Toolchain"} />
+          <Toolchain toolchainData={toolchainData} />
         </main>
 
         <footer>

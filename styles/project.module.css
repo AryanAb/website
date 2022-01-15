@@ -37,7 +37,7 @@
 	}
 }
 
-@media screen and (min-width: 760px) {
+@media screen and (min-width: 820px) {
 	.gridWrapper {
 		grid-template-columns: repeat(3, 1fr);
 	}

@@ -20,7 +20,7 @@ const ContactMe = () => {
         <div style={{ marginLeft: 140, marginRight: 140 }}>
           <p>
             You can also follow me on different social media. I'm not very active, but you might catch me posting something
-            here and there once in a while.
+            in a while.
           </p>
           <SocialMedia />
         </div>
