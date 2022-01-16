@@ -6,7 +6,7 @@ import Title from '../components/Title';
 import AboutMe from '../components/AboutMe';
 import Experiences from '../components/Experiences';
 import Projects from '../components/Projects';
-import SelectedPosts from '../components/SelectedPosts';
+import Posts from '../components/Posts';
 import Toolchain from '../components/Toolchain';
 
 import typewriterStyle from '../styles/typewriter.module.css';
@@ -70,7 +70,7 @@ export default function Home({ experiencesData, projectsData, allPostsData, tool
           <Projects projectsData={projectsData} />
 
           <Title str={"Selected Blog Posts"} />
-          <SelectedPosts posts={allPostsData} />
+          <Posts posts={allPostsData} />
 
           <Title str={"Toolchain"} />
           <Toolchain toolchainData={toolchainData} />

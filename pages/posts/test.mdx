@@ -1,13 +1,17 @@
+export const meta = {
+	"image": "/images/Maze.png",
+	"title": "Recursive Backtracking",
+	"authors": ["Aryan Abed-Esfahani"],
+	"summary": "In this part of the maze generation series, we will be looking at recursive backtracking, and implement a simple version of it in Python using Numpy and OpenCV.",
+	"date": "2022-01-01",
+	"sections": ["Section 1", "Section 2"]
+}
+{/* end of meta data */}
+{/* during the server side rendering, the above comment is used to parse the meta data. DO NOT REMOVE IT. */}
+
 import Post from '../../components/Post'
 import parseDate from '../../lib/parseDate';
 import {ImgExtra} from '../../components/PostParts';
-
-export const meta = {
-	title: 'Hello World!',
-	author: 'Aryan Abed-Esfahani',
-	date: '2022-01-01',
-	sections: ['Section 1', 'Section 2']
-}
 
 <h1>{meta.title}</h1>
 
@@ -42,7 +46,6 @@ print('Hello')
 
 and a random image for test:
 
-<!--![Image](/images/test.jpeg "Hello, World")-->
 <ImgExtra src="/images/test.jpeg" alt="Hello World" width={300} caption="Test Image" />
 
 and a random [link](https://www.reddit.com/) for test.
