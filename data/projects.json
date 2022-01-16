@@ -1,13 +1,65 @@
 {
 	"projects": [
 		{
-			"title": "Pokédoro"
+			"image": "/images/Pokedoro-Header.png",
+			"title": "Pokédoro",
+			"creators": [
+				"Aryan Abed-Esfahani",
+				"Jesse Liu",
+				"Cindy Wang",
+				"David Wu"
+			],
+			"technologies": [
+				"Python",
+				"Flask",
+				"CockroachDB",
+				"JavaScript",
+				"React",
+				"Google Chrome Extensions API"
+			],
+			"description": "Have you ever felt that the Pomodoro technique is a bit too boring? You should try Pokédoro, a combination of Pokémon and Pomodoro. This project was made for Hack the North 2020.",
+			"links": [
+				{
+					"name": "GitHub",
+					"href": "https://github.com/McHippy3/pokedoro-htn"
+				}
+			]
 		},
 		{
-			"title": "Songyo"
+			"image": "/images/songyo.png",
+			"title": "Songyo",
+			"creators": [
+				"Aryan Abed-Esfahani",
+				"Daksh Malhotra"
+			],
+			"technologies": [
+				"JavaScript",
+				"NodeJs",
+				"express.js",
+				"Socketio",
+				"Cloudfare",
+				"nginx"
+			],
+			"description": " Since the start of pandemic, playing many of our in-person games have been almost impossible. Songyo is a guess-the-song game where you can play online with friends.\n The back-end is coded in NodeJs with Express.js. All the connections with the front-end are done through sockets with SocketIO. The web app is hosted on Heroku and uses Cloudflare.",
+			"links": []
 		},
 		{
-			"title": "Maze Generator"
+			"image": "/images/Maze.png",
+			"title": "Maze Generator",
+			"creators": [
+				"Aryan Abed-Esfahani"
+			],
+			"technologies": [
+				"Python",
+				"OpenCV"
+			],
+			"description": "The maze generator is a set of algorithms able to randomly generate mazes. The program can either draw and save these mazes as images, or simply return an numpy array representation of the maze.\n The program is made using Python and the OpenCV library is used for drawing the mazes.",
+			"links": [
+				{
+					"name": "GitHub",
+					"href": "https://github.com/AryanAb/MazeGenerator"
+				}
+			]
 		}
 	]
 }

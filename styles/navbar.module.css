@@ -1,47 +1,97 @@
-.navbar {
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-end;
-  background-color: rgba(38, 198, 218, 1.0);
-  line-height: 8vh;
-  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.20);
-  z-index: 100;
-}
+  .navbar {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    background-color: rgba(38, 198, 218, 1.0);
+    line-height: 8vh;
+    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.20);
+    z-index: 100;
+  }
 
-.navbar_logo {
-  margin-left: 1%;
-}
+  .navbar_logo {
+    margin-left: 1%;
+  }
 
-.navbar ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  height: 8.4vh;
-  align-items: center;
-}
+  .navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    height: 8.4vh;
+    align-items: center;
+  }
 
-.navbar li {
-  padding: 15px;
-  display: inline;
-  line-height: 100%;
-}
+  .navbar li {
+    padding-right: 8px;
+    padding-left: 8px;
+    display: inline;
+  }
 
-.navbar li:hover {
-    background-color: rgba(0, 0, 0, 0.13);
-    -webkit-transition: background-color 250ms linear;
-    -ms-transition: background-color 250ms linear;
-    transition: background-color 250ms linear;
-}
+  .navbar li:hover {
+      background-color: rgba(0, 0, 0, 0.13);
+      -webkit-transition: background-color 250ms linear;
+      -ms-transition: background-color 250ms linear;
+      transition: background-color 250ms linear;
+  }
 
-.navbar a {
-  font-size: 20px;
-  color: rgb(68, 68, 68);
-}
+  .navbar a {
+    font-size: 13px;
+    color: rgb(68, 68, 68);
+  }
 
-.navbar a:hover {
-  text-decoration: none;
+  .navbar a:hover {
+    text-decoration: none;
+  }
+
+@media screen and (min-width: 550px ) {
+  .navbar {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    background-color: rgba(38, 198, 218, 1.0);
+    line-height: 8vh;
+    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.20);
+    z-index: 100;
+  }
+
+  .navbar_logo {
+    margin-left: 1%;
+  }
+
+  .navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    height: 8.4vh;
+    align-items: center;
+  }
+
+  .navbar li {
+    padding-right: 15px;
+    padding-left: 15px;
+    display: inline;
+  }
+
+  .navbar li:hover {
+      background-color: rgba(0, 0, 0, 0.13);
+      -webkit-transition: background-color 250ms linear;
+      -ms-transition: background-color 250ms linear;
+      transition: background-color 250ms linear;
+  }
+
+  .navbar a {
+    font-size: 20px;
+    color: rgb(68, 68, 68);
+  }
+
+  .navbar a:hover {
+    text-decoration: none;
+  }
 }

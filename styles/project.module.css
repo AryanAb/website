@@ -1,34 +1,54 @@
-.gridWrapper {
+.wrapper {
 	padding-left: 10%;
 	padding-right: 10%;
-	display: grid;
-	grid-template-columns: minmax(300px, 1fr);
-	justify-content: center;
-	gap: 2rem;
+	display: flex;
+	flex-direction: column;
 }
 
 .container {
-	box-shadow: 0px 2px 8px 0px gray;
-	text-align: center;
-	border-radius: 1rem;
-	position: relative;
+	display: flex;
+	flex-direction: row;
+	padding: 15px;
 }
 
 .banner {
-	border-bottom: 1px solid gray;
+	width: 20%;
+	display: flex;
+	justify-content: center;
+}
+
+.info {
+	width: 80%;
 }
 
 .title {
-	font-weight: 10;
-	font-size: 2rem;
+	font-size: 35px;
+	margin-top: 0;
+	margin-bottom: 0; 
 }
 
-.role {
-	font-weight: 350;
+.creators {
+	margin-left: 20px;
+	margin-bottom: 0;
 }
 
-.date {
-	font-weight: 10;
+.technologies {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.technology {
+	color: #e0a355;
+	padding-left: 15px;
+}
+
+.links {
+	padding-right: 30px;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
 }
 
 @media screen and (min-width: 500px) {

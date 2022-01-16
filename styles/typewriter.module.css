@@ -1,11 +1,17 @@
 .typewriter {
 	padding-top: 1.5%;
 	font-family: 'Hack', monospace;
-	font-size: 3.5vw;
+	font-size: 90px;
 	display: flex;
 	justify-content: center;
 }
 
 .gap {
 	margin-top: 26vh;
+}
+
+@media screen and (max-width: 550px) {
+	.typewriter {
+		font-size: 55px;
+	}
 }

@@ -16,21 +16,24 @@ import Typewriter from 'typewriter-effect';
 import { getExperiencesData } from '../lib/experiences';
 import { getSortedPostsData } from '../lib/posts';
 import { getToolchainData } from '../lib/toolchain';
+import { getSelectedProjectsData } from '../lib/selected_projects';
 
 export async function getStaticProps() {
   const experiencesData = getExperiencesData();
+  const projectsData = getSelectedProjectsData();
   const allPostsData = getSortedPostsData();
   const toolchainData = getToolchainData();
   return {
     props: {
       experiencesData,
+      projectsData,
       allPostsData,
       toolchainData
     }
   }
 };
 
-export default function Home({ experiencesData, allPostsData, toolchainData }) {
+export default function Home({ experiencesData, projectsData, allPostsData, toolchainData }) {
   return (
     <div className="container">
       <Head>
@@ -56,17 +59,15 @@ export default function Home({ experiencesData, allPostsData, toolchainData }) {
               }}
             />
           </div>
-
           <Logos />
 
           <AboutMe />
 
-          <div className={typewriterStyle.gap}></div>
           <Title str={"Experiences"} />
           <Experiences experiencesData={experiencesData} />
 
           <Title str={"Selected Projects"} />
-          <Projects projectsData={""} />
+          <Projects projectsData={projectsData} />
 
           <Title str={"Selected Blog Posts"} />
           <SelectedPosts posts={allPostsData} />
