@@ -8,6 +8,7 @@ import Experiences from '../components/Experiences';
 import Projects from '../components/Projects';
 import Posts from '../components/Posts';
 import Toolchain from '../components/Toolchain';
+import ContactIndex from '../components/ContactIndex';
 
 import typewriterStyle from '../styles/typewriter.module.css';
 
@@ -16,12 +17,12 @@ import Typewriter from 'typewriter-effect';
 import { getExperiencesData } from '../lib/experiences';
 import { getSortedPostsData } from '../lib/posts';
 import { getToolchainData } from '../lib/toolchain';
-import { getSelectedProjectsData } from '../lib/selected_projects';
+import { getProjectsData } from '../lib/projects';
 
 export async function getStaticProps() {
   const experiencesData = getExperiencesData();
-  const projectsData = getSelectedProjectsData();
-  const allPostsData = getSortedPostsData();
+  const projectsData = getProjectsData().projects.slice(0, 4);
+  const allPostsData = getSortedPostsData().slice(0, 4);
   const toolchainData = getToolchainData();
   return {
     props: {
@@ -74,6 +75,9 @@ export default function Home({ experiencesData, projectsData, allPostsData, tool
 
           <Title str={"Toolchain"} />
           <Toolchain toolchainData={toolchainData} />
+
+          <Title str={"Contact Me"} />
+          <ContactIndex />
         </main>
 
         <footer>

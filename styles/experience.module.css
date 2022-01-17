@@ -1,6 +1,6 @@
 .gridWrapper {
-	padding-left: 10%;
-	padding-right: 10%;
+	margin-left: 10%;
+	margin-right: 10%;
 	display: grid;
 	grid-template-columns: minmax(300px, 1fr);
 	justify-content: center;
