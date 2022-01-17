@@ -87,6 +87,7 @@
 }
 
 .btn {
+	cursor: pointer;
 	background-color: rgb(234, 196, 53);
 	align-self: center;
 	padding: 15px;
@@ -108,6 +109,6 @@
 }
 
 .link {
-	text-decoration: none;
+	text-decoration: none !important;
 	color: black;
 }
