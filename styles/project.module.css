@@ -12,9 +12,14 @@
 }
 
 .banner {
-	width: 20%;
+	width: 300px;
+	min-width: 300px;
+	height: 200px;
+	min-height: 200px;
 	display: flex;
 	justify-content: center;
+	margin-right: 20px;
+	position: relative;
 }
 
 .info {
@@ -22,14 +27,21 @@
 }
 
 .title {
-	font-size: 35px;
+	font-size: 32px;
 	margin-top: 0;
 	margin-bottom: 0; 
 }
 
 .creators {
-	margin-left: 20px;
+	margin-top: 0;
+	margin-left: 0;
 	margin-bottom: 0;
+}
+
+.creator {
+	margin-right: 15px;
+	display: inline-block;
+	font-weight: 400;
 }
 
 .technologies {
@@ -39,7 +51,8 @@
 
 .technology {
 	color: #e0a355;
-	padding-left: 15px;
+	margin-left: 15px;
+	display: inline-block;
 }
 
 .links {
@@ -51,14 +64,25 @@
 	flex-direction: row;
 }
 
-@media screen and (min-width: 500px) {
-	.gridWrapper {
-		grid-template-columns: repeat(2, 1fr);
+@media screen and (max-width: 790px) {
+	.wrapper {
+		margin-left: 1rem;
+		margin-right: 1rem;
 	}
-}
 
-@media screen and (min-width: 820px) {
-	.gridWrapper {
-		grid-template-columns: repeat(3, 1fr);
+	.container {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.info {
+		width: 100%;
+	}
+
+	.banner {
+		align-self: center;
+		width: 66vw;
+		height: 44vw;
+		margin-right: 0;
 	}
 }

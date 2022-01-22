@@ -33,13 +33,13 @@
 	font-weight: 10;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width:850px) {
 	.gridWrapper {
 		grid-template-columns: repeat(2, 1fr);
 	}
 }
 
-@media screen and (min-width: 820px) {
+@media screen and (min-width: 850px) {
 	.gridWrapper {
 		grid-template-columns: repeat(2, 1fr);
 	}

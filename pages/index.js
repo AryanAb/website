@@ -34,55 +34,55 @@ export async function getStaticProps() {
   }
 };
 
-export default function Home({ experiencesData, projectsData, allPostsData, toolchainData }) {
-  return (
-    <div className="container">
-      <Head>
-        <title>Aryan Abed-Esfahani</title>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css" />
+const Home = ({ experiencesData, projectsData, allPostsData, toolchainData }) => (
+  <div className="container">
+    <Head>
+      <title>Aryan Abed-Esfahani</title>
+      <link rel="icon" href="/favicon.ico" />
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css" />
 
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
 
-      </Head>
+    </Head>
 
-      <body>
-        <Navbar />
+    <body>
+      <Navbar />
 
-        <main style={{ marginTop: 80 }}>
+      <main style={{ marginTop: 60 }}>
 
-          <div className={typewriterStyle.typewriter}>
-            <Typewriter
-              onInit={(typewriter) => {
-                typewriter.typeString("Hi, I'm Aryan!").pauseFor("2000").deleteAll().typeString("Welcome to my website").pauseFor("2000").deleteAll().typeString("Enjoy :)").start();
-              }}
-            />
-          </div>
-          <Logos />
+        <div className={typewriterStyle.typewriter}>
+          <Typewriter
+            onInit={(typewriter) => {
+              typewriter.typeString("Hi, I'm Aryan!").pauseFor("2000").deleteAll().typeString("Welcome to my website").pauseFor("2000").deleteAll().typeString("Enjoy :)").start();
+            }}
+          />
+        </div>
+        <Logos />
 
-          <AboutMe />
+        <AboutMe />
 
-          <Title str={"Experiences"} />
-          <Experiences experiencesData={experiencesData} />
+        <Title str={"Experiences"} />
+        <Experiences experiencesData={experiencesData} />
 
-          <Title str={"Selected Projects"} />
-          <Projects projectsData={projectsData} />
+        <Title str={"Selected Projects"} />
+        <Projects projectsData={projectsData} />
 
-          <Title str={"Selected Blog Posts"} />
-          <Posts posts={allPostsData} />
+        <Title str={"Selected Blog Posts"} />
+        <Posts posts={allPostsData} />
 
-          <Title str={"Toolchain"} />
-          <Toolchain toolchainData={toolchainData} />
+        <Title str={"Toolchain"} />
+        <Toolchain toolchainData={toolchainData} />
 
-          <Title str={"Contact Me"} />
-          <ContactIndex />
-        </main>
+        <Title str={"Contact Me"} />
+        <ContactIndex />
+      </main>
 
-        <footer>
-        </footer>
-      </body>
-    </div>
-  )
-}
+      <footer>
+      </footer>
+    </body>
+  </div>
+);
+
+export default Home;

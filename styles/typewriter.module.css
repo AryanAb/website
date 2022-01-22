@@ -1,7 +1,6 @@
 .typewriter {
-	padding-top: 1.5%;
 	font-family: 'Hack', monospace;
-	font-size: 90px;
+	font-size: calc(25px + 5vw);
 	display: flex;
 	justify-content: center;
 }
@@ -10,8 +9,8 @@
 	margin-top: 26vh;
 }
 
-@media screen and (max-width: 550px) {
+/* @media screen and (max-width: 550px) {
 	.typewriter {
 		font-size: 55px;
 	}
-}
+} */

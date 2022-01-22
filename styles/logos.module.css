@@ -10,3 +10,11 @@
   padding: 1%;
   display: inline;
 }
+
+.container {
+  position: relative;
+  width: 4.2vw;
+  min-width: 40px;
+  height: 4.2vw;
+  min-height: 40px;
+}

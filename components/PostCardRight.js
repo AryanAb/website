@@ -3,7 +3,7 @@ import postsStyles from '../styles/posts.module.css';
 import Link from 'next/link';
 import parseDate from '../lib/parseDate';
 
-const PostCard = ({ id, image, title, authors, summary, date }) => (
+const PostCardRight = ({ id, image, title, authors, summary, date }) => (
   <Link href={`posts/${id}`}>
     <div className={postsStyles.container}>
       <div className={postsStyles.info}>
@@ -20,10 +20,10 @@ const PostCard = ({ id, image, title, authors, summary, date }) => (
       </div>
 
       <div className={postsStyles.banner}>
-        <Image src={image} width={200} height={200} />
+        <Image src={image} layout="fill" />
       </div>
     </div>
-  </Link >
+  </Link>
 );
 
-export default PostCard;
+export default PostCardRight;

@@ -53,7 +53,7 @@
 				"Python",
 				"OpenCV"
 			],
-			"description": "The maze generator is a set of algorithms able to randomly generate mazes. The program can either draw and save these mazes as images, or simply return an numpy array representation of the maze.\n The program is made using Python and the OpenCV library is used for drawing the mazes.",
+			"description": "The maze generator is a set of algorithms able to randomly generate mazes. The program can either draw and save these mazes as images, or simply return a numpy array representation of the maze.\n The program is made using Python and the OpenCV library is used for drawing the mazes.",
 			"links": [
 				{
 					"name": "GitHub",

@@ -16,19 +16,23 @@
 	padding: 0;
 }
 
-@media screen and (max-width: 550px) {
-	.sidenav {
-		display: none;
-	}
-}
-
 .main {
 	width: 80%;
 	height: 150vh;
 	background-color: #fff;
-	padding-left: 1.5%;
-	padding-right: 4%;
-	margin-left: 20%;
+	margin-left: 22%;
+	margin-right: 4%;
+}
+
+@media screen and (max-width: 790px) {
+	.sidenav {
+		display: none;
+	}
+	.main {
+		width: 100%;
+		margin-left: 5%;
+		margin-right: 5%;
+	}
 }
 
 .sidenav ul {

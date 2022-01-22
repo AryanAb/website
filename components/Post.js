@@ -8,6 +8,7 @@ import { MDXProvider } from "@mdx-js/react";
 import { H1, H2, H3, H4, P, Img } from "./PostParts";
 
 import { useRef } from 'react';
+import { Html } from "next/document";
 
 const Post = ({ children, meta }) => {
 
@@ -18,7 +19,8 @@ const Post = ({ children, meta }) => {
     h4: H4,
     p: P,
     img: Img
-  }
+  };
+
   return (
     <MDXProvider components={components}>
       <Head>
@@ -27,21 +29,23 @@ const Post = ({ children, meta }) => {
           href="https://unpkg.com/dracula-prism/dist/css/dracula-prism.css"
         ></link>
       </Head>
-      <ScrollIndicator />
-      <div className={postStyles.wrapper}>
-        <div className={postStyles.sidenav}>
-          <ul>
-            <li key="backToWebsite" style={{ paddingLeft: 0, display: "flex", justifyContent: 'center' }}><Link href="/">🔙 Back to Website</Link></li>
-            <li key="separator" className={postStyles.separator} />
-            <li key="title" style={{ paddingLeft: 0, display: "flex", justifyContent: 'center' }}>{meta.title}</li>
-            <li key="toc" className={postStyles.subheader}>Table of Contents</li>
-            {meta.sections.map(section => <li key={section} className={postStyles.sections}><a style={{ margin: 0, display: 'block', width: '100%', height: '100%' }} href={`#${section.replace(' ', '_')}`}>{section}</a></li>)}
-          </ul>
+      <body>
+        <ScrollIndicator />
+        <div className={postStyles.wrapper}>
+          <div className={postStyles.sidenav}>
+            <ul>
+              <li key="backToWebsite" style={{ paddingLeft: 0, display: "flex", justifyContent: 'center' }}><Link href="/">🔙 Back to Website</Link></li>
+              <li key="separator" className={postStyles.separator} />
+              <li key="title" style={{ paddingLeft: 0, display: "flex", justifyContent: 'center', textAlign: 'center' }}>{meta.title}</li>
+              <li key="toc" className={postStyles.subheader}>Table of Contents</li>
+              {meta.sections.map(section => <li key={section} className={postStyles.sections}><a style={{ margin: 0, display: 'block', width: '100%', height: '100%' }} href={`#${section.replace(' ', '_')}`}>{section}</a></li>)}
+            </ul>
+          </div>
+          <main className={postStyles.main}>
+            {children}
+          </main>
         </div>
-        <main className={postStyles.main}>
-          {children}
-        </main>
-      </div>
+      </body>
     </MDXProvider>
   );
 };
