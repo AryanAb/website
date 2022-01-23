@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import Projects from "../components/Projects";
 import Title from "../components/Title";
 import { getProjectsData } from "../lib/projects";
+import Head from "next/head";
 
 export async function getStaticProps() {
   const projectsData = getProjectsData().projects;
@@ -12,8 +13,18 @@ export async function getStaticProps() {
   }
 }
 
-const ProjectsPage = ({ projectsData }) => {
-  return (
+const ProjectsPage = ({ projectsData }) => (
+  <>
+    <Head>
+      <title> Projects | Aryan Abed-Esfahani </title>
+
+      <meta property="og:title" content="Aryan Abed-Esfahani" />
+      <meta property="og:url" content="https://website-aryanab.vercel.app/projects" />
+      <meta property="og:image" content="/images/fun.jpg" />
+      <meta property="og:type" content="website" />
+      <meta property="og:description" content="See the full list of my projects, the tech stack I used to make them, and a brief summary." />
+    </Head>
+
     <body>
       <Navbar />
 
@@ -22,7 +33,7 @@ const ProjectsPage = ({ projectsData }) => {
         <Projects projectsData={projectsData} />
       </main>
     </body>
-  );
-};
+  </>
+);
 
 export default ProjectsPage;

@@ -18,8 +18,8 @@ const PostCardLeft = ({ id, image, title, authors, summary, date }) => (
           <p className={postsStyles.creators} style={{ marginLeft: 0, marginRight: 20 }}>{authors}</p>
           <p className={postsStyles.date} style={{ marginLeft: 0, marginRight: 20 }}>{parseDate(date)}</p>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <p style={{ textAlign: 'left' }}>{summary}</p>
+        <div style={{ display: 'flex' }}>
+          <p>{summary}</p>
         </div>
       </div>
     </div>

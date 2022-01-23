@@ -1,6 +1,6 @@
 .typewriter {
 	font-family: 'Hack', monospace;
-	font-size: calc(25px + 5vw);
+	font-size: calc(9px + 5vw);
 	display: flex;
 	justify-content: center;
 }

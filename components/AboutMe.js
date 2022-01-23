@@ -8,7 +8,7 @@ const AboutMe = () => {
   return (
     <div className={aboutmeStyle.aboutme}>
       <animated.div className={aboutmeStyle.image} style={imgAnim}>
-        <img src="/images/placeholder.png" />
+        <img src="/images/fun.jpg" />
       </animated.div>
       <animated.p className={aboutmeStyle.paragraph} style={parAnim}>
         Hello. My name is Aryan. I am a Computer Science student at the University of Waterloo.

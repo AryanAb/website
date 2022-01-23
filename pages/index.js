@@ -20,7 +20,7 @@ import { getToolchainData } from '../lib/toolchain';
 import { getProjectsData } from '../lib/projects';
 
 export async function getStaticProps() {
-  const experiencesData = getExperiencesData();
+  const experiencesData = getExperiencesData().experiences;
   const projectsData = getProjectsData().projects.slice(0, 4);
   const allPostsData = getSortedPostsData().slice(0, 4);
   const toolchainData = getToolchainData();
@@ -35,16 +35,20 @@ export async function getStaticProps() {
 };
 
 const Home = ({ experiencesData, projectsData, allPostsData, toolchainData }) => (
-  <div className="container">
+  <>
     <Head>
       <title>Aryan Abed-Esfahani</title>
-      <link rel="icon" href="/favicon.ico" />
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css" />
 
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
 
+      <meta property="og:title" content="Aryan Abed-Esfahani" />
+      <meta property="og:url" content="https://website-aryanab.vercel.app/" />
+      <meta property="og:image" content="/images/fun.jpg" />
+      <meta property="og:type" content="website" />
+      <meta property="og:description" content="Hello, I'm Aryan. Welcome to my personal website. Here, you can see my experiences, my projects and some of the posts I make." />
     </Head>
 
     <body>
@@ -82,7 +86,7 @@ const Home = ({ experiencesData, projectsData, allPostsData, toolchainData }) =>
       <footer>
       </footer>
     </body>
-  </div>
+  </>
 );
 
 export default Home;

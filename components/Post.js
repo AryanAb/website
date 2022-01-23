@@ -28,6 +28,15 @@ const Post = ({ children, meta }) => {
           rel="stylesheet"
           href="https://unpkg.com/dracula-prism/dist/css/dracula-prism.css"
         ></link>
+
+        <title>{meta.title} | Aryan Abed-Esfahani</title>
+
+        <meta property="og:title" content={meta.title} />
+        <meta property="og:url" content="https://website-aryanab.vercel.app/posts" />
+        <meta property="og:image" content={meta.image} />
+        <meta property="og:type" content="article" />
+        <meta property="og:description" content={meta.summary} />
+
       </Head>
       <body>
         <ScrollIndicator />
