@@ -6,7 +6,8 @@
 			"role": "Software Engineer Intern",
 			"duration": "Jan. 2022 - Present",
 			"summary": [
-				"Still doing the internship, wait until I'm done!"
+				"Working with <strong>AWS</strong> services such as <strong>lambda</strong> and <strong>DynamoDB</strong> to manage infrastructure for other teams at Capital One by creating easy-to-use scripts and applications using <strong>Python</strong> and <strong>AWS SDK</strong>.",
+				"Using <strong>DevOps</strong> best practices by contributing to the <strong>Infrastructure as Code</strong> foundation, which runs Capital One Canada's operations."
 			]
 		},
 		{

@@ -38,6 +38,8 @@ const Home = ({ experiencesData, projectsData, allPostsData, toolchainData }) =>
   <>
     <Head>
       <title>Aryan Abed-Esfahani</title>
+      <link rel="shortcut icon" href="/images/fun.jpg" />
+
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css" />
 
       <link rel="preconnect" href="https://fonts.googleapis.com" />

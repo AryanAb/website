@@ -16,12 +16,13 @@
 	padding: 0;
 }
 
-.main {
-	width: 80%;
+.article {
+	width: 75%;
 	height: 150vh;
 	background-color: #fff;
 	margin-left: 22%;
 	margin-right: 4%;
+	height: auto;
 }
 
 @media screen and (max-width: 790px) {

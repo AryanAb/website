@@ -1,0 +1,199 @@
+export const meta = {
+	"image": "/images/minecraft.png",
+	"title": "Hosting a Minecraft Server with AWS EC2",
+	"authors": ["Aryan Abed-Esfahani"],
+	"summary": "The guide explains the process to set up a Minecraft Server on AWS EC2. It will explore everything from creating an AWS EC2 instance to configuring Java for minecraft-server.",
+	"date": "2021-08-25",
+	"sections": ["Introduction", "Create an EC2 Instance", "Get minecraft_server", "Get Java", "Run Server", "Closing Notes"]
+}
+{/* end of meta data */}
+{/* during the server side rendering, the above comment is used to parse the meta data. DO NOT REMOVE IT. */}
+
+import Post from '../../components/Post'
+import parseDate from '../../lib/parseDate';
+import {ImgExtra} from '../../components/PostParts';
+
+<h1>{meta.title}</h1>
+
+<p>{meta.authors.join(', ')} - {parseDate(meta.date)}</p>
+
+## Introduction
+
+If you have ever played Minecraft, at some point you have wanted to set up your own server and play with friends. You
+might have taken the easy route: port forward your router, download minecraft_server, and run the it.
+
+This method works, however it might not be the best solution for you. What if your network or computer is not powerful to
+handle all your friends playing on the server? Then maybe you want to set up a dedicated server.
+
+This guide shows you how to set up a simple minecraft server using AWS EC2 which is going to be very cheap and easy to
+handle. 
+
+## Create an EC2 Instance
+
+As mentioned before if we host the server our own personal computer, we'll be facing issues with performance. So it is a
+good idea to host it somewhere else. For this guide, we will be hosting our server on the cloud. Hosting the cloud has a
+few up sides, the main one being easily scalable.
+
+There are multiple cloud providers out there. The big three are AWS (Amazon), GCP (Google), and Azure (Microsoft). In this
+guide we will be using AWS. Create an AWS account and give your payment information.
+
+Our Minecraft server will run on an EC2 instance. An EC2 instance is not a standalone computer that will act as a server.
+Rather, it is a virtual machine running on some hardware. This will make it easy for us to scale, and will end up being
+cheaper, as we only have to pay for what we use. Keep in mind that if you want to leave the server on for a long time,
+then a dedicated server is going to end up being cheaper.
+
+go ahead and start creating an EC2 instance. This will take you to the EC2 dashboard. If you have not created an instance
+before, it will prompt you to make one now. Click on launch instance and proceed.
+
+In step 1, choose the **Amazon Linux 2 AMI**. This operating system comes with some useful programs that makes it easier to
+use other AWS services, if we choose to do so (read the Closing Notes). Choose the **64-bit (x86)** version and press Select.
+
+<ImgExtra src="/images/aws1.png" alt= "Choosing the EC2's OS" width={1000} caption=""/>
+
+In step 2, you have to choose an instance type. You might see that t2.micro is labeled as "Free tier eligible".
+You can review AWS's free tier policy here. Choose an instance type that you think is the best for your case. You can
+see a list of them with details here. For our server of 6 people, we found t2.xlarge to be a good option, as the smaller
+t2s were laggy at times. You might also want to check the M6i and M6g types as well.
+
+<ImgExtra src="/images/aws2.png" alt= "Choosing the EC2's type" width={1000} caption=""/>
+
+After you have chosen your instance type, click on Next: Configure Instance Details and NOT on Review and Launch.
+There is nothing to change on this page for our case, so click on Next: Add Storage. Here you can choose your storage type.
+The default General Purpose (SSD) is already good and cheap, so click on Next: Add Tags. Again, nothing to change on this
+page, so hit Next: Configure Security Group.
+
+Assigning a security group for our instance is like port forwarding for a personal router. You tell the instance who and
+what is allowed to communicate with your server, and through what port. Give your security group a name and a description
+so you know what it is for later. The existing rule is for SSH connections (we'll talk about SSH later). Click on **Add Rule**
+to add a new rule for our Minecraft server. Set the type to **Custom TCP Rule**. Set the port range to **25565**. Finally, 
+set the source to **Anywhere**.
+
+<ImgExtra src="/images/aws3.png" alt= "Configuring the EC2's Security Group" width={1000} caption=""/>
+
+Now click Review and Launch. It might take a few moments for your instance to go live.
+
+Go to your EC2 dashboard and confirm that the instance is created. Select the instance you just created to see its detailed.
+If it is not already running, go to **Instance state > Start instance**. It'll take a short time for the instance to start.
+After the instance is in the start state (you might need to refresh the page to see the change happening), you should be
+able to see a public IPv4 address on the details panel. Take note of this IP address as this is what you have to use to
+connect to the server. Due to the nature of EC2, this address will change each time the instance is rebooted.
+
+It is time to connect to our instance. One way to do it is to connect using SSH with your terminal. The credentials you
+need are on the page. However, we can make our lives easy and just press on the Connect button at the top of the page.
+Then in the EC2 Instance Connect tab, press the Connect button. This will create an SSH session with a terminal in our
+browser.
+
+Now in our instance environment, we want to create a directory to keep our server related files and folders. Type the
+following command:
+
+```
+cd /
+sudo mkdir srv
+cd srv
+sudo mkdir my-server
+```
+
+This will create the path `srv/my-server` at the root directory. You can change the `my-server` directory name to 
+whatever you like. Remember that we never log in as root, so you must always use sudo for commands that require any sort
+of permissions.
+
+## Get minecraft_server
+
+So far we have the environment to host the server. The next step, similar to when we self-hosted, is to download 
+minecraft_server. Since we're in an SSH session with the instance, we must use the console to download the software.
+
+`wget` is a handy program that downloads files from us from the internet. It is fairly simple to use for our case.
+The only argument that you must provide is the URL of the file you want to download. Navigate to the 
+[minecraft_server page](https://www.minecraft.net/en-us/download/server), right click on the download link, and copy the URL.
+
+Then at the directory where you are storing the server, run the command below with the URL replaced with what you copied.
+At the time of writing this guide, that will be: 
+
+```
+sudo wget https://launcher.mojang.com/v1/objects/a16d67e5807f57fc4e550299cf20226194497dc2/server.jar
+```
+
+## Get Java
+
+Now that we have minecraft_server, we have to run it. The operating system already comes with Java 8. However,
+the newer versions of minecraft_server require newer versions of Java. The process of downloading Java is similar to
+minecraft_server.
+
+To begin with, create a folder where you will save the java files.
+
+```
+cd /
+sudo mkdir java
+cd java
+```
+
+Go to [OpenJDK's website](https://openjdk.java.net/), find the version of Java that you want, right click on the
+Linux/x64 version, and copy the link. Finally, run the command below with the URL replaced with what you just copied.
+At the time of writing this guide, that will be:
+
+```
+sudo wget https://download.java.net/java/GA/jdk16.0.2/d4a915d82b4c4fbb9bde534da945d746/7/GPL/openjdk-16.0.2_linux-x64_bin.tar.gz
+```
+
+This will download a tar.gz file. To unzip it, run the following command:
+
+```
+sudo tar -xf openjdk-16.0.1_linux-x64_bin.tar.gz
+```
+
+Note that the name of the compressed file you downloaded might be different and you may need to change the command shown
+above.
+
+Now that we have Java installed, we want to be able to call the command and use it. Note that since we are going to use 
+`sudo`, we can skip adding the command to `PATH` environment variable and add it directly to the `sudo` path. To do that, 
+run the command:
+
+```
+sudo visudo
+```
+
+This will start a `vim` session with the sudo config file. If you have not used vim before, take the time now to learn how
+you can edit and save documents using it. Edit the file by adding the Java bin path to the end of `secure_path`. 
+In our case that would be:
+
+```
+secure_path="...:/java/jdk-16.0.1"	
+```
+
+## Run Server
+
+Now that we have everything set up, we can run the server. Go the the directory where you saved minecraft_server and run
+the command to boot up minecraft_server:
+
+```
+sudo java -Xmx8G -jar server.jar nogui
+```
+
+Make sure that the amount of RAM you are specifying is no more than what your EC2 instance has to offer. If this is the
+first time you are running the server, then you must edit the eula.txt (using vim or any other console text editor of your
+choice) and change the final line to:
+
+```
+eula=true
+```
+
+Then just run the server again and you should be able to edit the server properties. From now own, simply navigate to
+this directory, and run the server. Your friends should be able to join the server by simply typing the public IPv4
+address of the instance (found on the instance dashboard) into the direct connect section. Note that the public IPv4
+address changes each time the instance is rebooted.
+
+## Closing Notes
+
+This guide showed you how you can host a Minecraft sever yourself on an AWS EC2 instance. This way of hosting has many
+advantages. If you ever feel like you need a more powerful server, you can upgrade the server just by a few clicks by
+going to Actions > Instance Settings > Change instance type (There are certain requirements that are outlined in the 
+[EC2 documentations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-resize.html)).
+
+You can also use all the other AWS services such as S3 for automatic backups or AWS Lambda for automatic boot up.
+
+Again, keep in mind that this is not a dedicated server. If you leave the server to be up for 24 hours for multiple days,
+your bill will have some not so good looking numbers on it. So make sure you stop the instance after each play session.
+
+*Have fun playing Minecraft*.
+
+export default ({children, meta}) => (<Post meta={meta}>{children}</Post>);

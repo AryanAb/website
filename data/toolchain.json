@@ -15,6 +15,42 @@
 		{
 			"src": "/images/JavaLogo.png",
 			"name": "Java"
+		},
+		{
+			"src": "/images/jslogo.png",
+			"name": "JavaScript"
+		},
+		{
+			"src": "/images/tslogo.png",
+			"name": "TypeScript"
+		},
+		{
+			"src": "/images/reactlogo.png",
+			"name": "React"
+		},
+		{
+			"src": "/images/unitylogo.png",
+			"name": "Unity"
+		},
+		{
+			"src": "/images/awslogo.png",
+			"name": "AWS"
+		},
+		{
+			"src": "/images/NodeJSLogo.png",
+			"name": "NodeJs"
+		},
+		{
+			"src": "/images/LatexLogo.png",
+			"name": "LaTeX"
+		},
+		{
+			"src": "/images/FlaskLogo.png",
+			"name": "Flask"
+		},
+		{
+			"src": "/images/ExpressLogo.png",
+			"name": "Express"
 		}
 	]
 }

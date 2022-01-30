@@ -28,6 +28,6 @@
 
 @media screen and (min-width: 820px) {
 	.gridWrapper {
-		grid-template-columns: repeat(8, 1fr);
+		grid-template-columns: repeat(7, 1fr);
 	}
 }

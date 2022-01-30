@@ -50,9 +50,9 @@ const Post = ({ children, meta }) => {
               {meta.sections.map(section => <li key={section} className={postStyles.sections}><a style={{ margin: 0, display: 'block', width: '100%', height: '100%' }} href={`#${section.replace(' ', '_')}`}>{section}</a></li>)}
             </ul>
           </div>
-          <main className={postStyles.main}>
+          <article className={postStyles.article}>
             {children}
-          </main>
+          </article>
         </div>
       </body>
     </MDXProvider>

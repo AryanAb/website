@@ -60,6 +60,174 @@
 					"href": "https://github.com/AryanAb/MazeGenerator"
 				}
 			]
+		},
+		{
+			"image": "/images/Trivia.png",
+			"title": "RHHS Trivia",
+			"creators": [
+				"Aryan Abed-Esfahani"
+			],
+			"technologies": [
+				"Python",
+				"Flask",
+				"Firebase",
+				"Google Cloud Platform",
+				"SocketIO"
+			],
+			"description": "After noticing the limiting number of buzzers in my school's Trivia Club, I decided to make a buzzer web app. The web app supports user sign in and log in and utilizes Firebase. All the connections are through HTTPS, meaning that it is more reliable than sockets.",
+			"links": [
+				{
+					"name": "GitHub",
+					"href": "https://github.com/AryanAb/trivia"
+				},
+				{
+					"name": "Live Version",
+					"href": "https://trivia-259917.appspot.com/"
+				}
+			]
+		},
+		{
+			"image": "/images/FP.png",
+			"title": "Finger Painting!",
+			"creators": [
+				"Aryan Abed-Esfahani",
+				"Gina Davis"
+			],
+			"technologies": [
+				"Tensorflow",
+				"JavaScript",
+				"p5.js"
+			],
+			"description": "With Finger Painting!, you can use your fingers and webcam to paint on the screen. Finger Painting! was created for the final project of Google CSSI 2020. To track the fingers, we used JavaScript TensorFlow models. The drawings are made using p5.js.",
+			"links": [
+				{
+					"name": "Glitch",
+					"href": "https://glitch.com/edit/#!/cssi-final-project-handtrack"
+				},
+				{
+					"name": "Live Version",
+					"href": "https://cssi-final-project-handtrack.glitch.me/"
+				}
+			]
+		},
+		{
+			"image": "/images/lookARound.png",
+			"title": "lookARound",
+			"creators": [
+				"Aryan Abed-Esfahani",
+				"Jesse Liu",
+				"Raunaq Singh"
+			],
+			"technologies": [
+				"Google Maps API",
+				"Swift",
+				"AR"
+			],
+			"description": "Have you ever wanted to explore a new city, and also have all the important locations? Well, then lookARound is for you. An app for adventurers, designed and created during PennApps XX, 2019. The Google Maps API gives a list of points of interest and using Apple's geolocation and AR SDK, we draw those points onto the screen.",
+			"links": [
+				{
+					"name": "GitHub",
+					"href": "https://github.com/raunaqsingh2020/lookARound"
+				},
+				{
+					"name": "Devpost",
+					"href": "https://devpost.com/software/lookaround-0odlv3"
+				}
+			]
+		},
+		{
+			"image": "/images/TDV.png",
+			"title": "TDV",
+			"creators": [
+				"Aryan Abed-Esfahani",
+				"Daksh Malhotra",
+				"Chris Wood"
+			],
+			"technologies": [
+				"Python",
+				"Flask",
+				"Google Maps API",
+				"chart.js"
+			],
+			"description": "TDV is a data visualization app. It gathers a user's financial data, and provides the user with multiple useful and easy to understand graphs. TDV was designed and created during EC Hax IV, 2019. The back-end is coded in Python with Flask. Data was retrieved using TD Da Vinci API. The heat map was generated using Google Maps API. The charts are done with chart.js.",
+			"links": [
+				{
+					"name": "GitHub",
+					"href": "https://github.com/DakshChan/EcHacks-4-Public"
+				},
+				{
+					"name": "Devpost",
+					"href": "https://devpost.com/software/tdv"
+				}
+			]
+		},
+		{
+			"image": "/images/Armygeddon.png",
+			"title": "Armygeddon",
+			"creators": [
+				"Aryan Abed-Esfahani",
+				"Adam Edwards",
+				"Lewis Fiford",
+				"Arnau Frago",
+				"John Louigi Quintos",
+				"Evan Wardell"
+			],
+			"technologies": [
+				"Unreal Engine 4",
+				"Blender"
+			],
+			"description": "ArmyGeddon is the classic game of Risk. The game is playable against upto 4 bots and follows all the fun and classic rules of Risk. The game was made for Virtus Game Jam 2018 and is created in Unreal Engine 4.",
+			"links": [
+				{
+					"name": "Itch.io",
+					"href": "https://lewis-fiford.itch.io/army-geddon"
+				}
+			]
+		},
+		{
+			"image": "/images/UMG.png",
+			"title": "Untitled Maze Game",
+			"creators": [
+				"Aryan Abed-Esfahani",
+				"Eric Lang",
+				"Jesse Liu",
+				"Daksh Malhotra",
+				"Cindy Wang"
+			],
+			"technologies": [
+				"Java"
+			],
+			"description": "Untitled Maze game is a multiplayer maze solving game. The players compete on solving the maze as fast as possible, and also earning the most points as they try to do so. The game was created for the final project of AP Computer Science A. The game web sockets to establish communication between the clients and the server. Furthermore, the game uses multiple rendering techniques to draw dynamic shadows.",
+			"links": [
+				{
+					"name": "GitHub",
+					"href": "https://github.com/DakshChan/UntitledMazeGame"
+				}
+			]
+		},
+		{
+			"image": "/images/Covid19Bot.png",
+			"title": "Coivd-19 Stats Bot",
+			"creators": [
+				"Aryan Abed-Esfahani"
+			],
+			"technologies": [
+				"JavaScript",
+				"NodeJs",
+				"Axios.js",
+				"Plotly.js"
+			],
+			"description": "Covid-19 Stats Bot is a useful Discord bot that gives information about the Covid-19 virus. It is capable of returning latest number of infections, as well as a graph of number of cases vs. time for each country, as well as a comparison. The bot is made in JavaScript using NodeJs. The API calls are handled with Axios.js and the plots are drawn and stored using Plotly.",
+			"links": [
+				{
+					"name": "GitHub",
+					"href": "https://github.com/AryanAb/trivia"
+				},
+				{
+					"name": "Live Version",
+					"href": "https://trivia-259917.appspot.com/"
+				}
+			]
 		}
 	]
 }

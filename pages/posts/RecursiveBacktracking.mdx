@@ -1,0 +1,364 @@
+export const meta = {
+	"image": "/images/Maze.png",
+	"title": "Maze Generator - Recursive Backtracking",
+	"authors": ["Aryan Abed-Esfahani"],
+	"summary": "In this part of the maze generation series, we will be looking at recursive backtracking, and implement a simple version of it in Python using Numpy and OpenCV.",
+	"date": "2021-01-09",
+	"sections": ["Introduction", "Explenation", "Set Up", "Code", "Closing Notes"]
+}
+{/* end of meta data */}
+{/* during the server side rendering, the above comment is used to parse the meta data. DO NOT REMOVE IT. */}
+
+import Post from '../../components/Post'
+import parseDate from '../../lib/parseDate';
+import {ImgExtra} from '../../components/PostParts';
+
+<h1>{meta.title}</h1>
+
+<p>{meta.authors.join(', ')} - {parseDate(meta.date)}</p>
+
+## Introduction
+
+Recursive backtracking is a relatively simple algorithm to randomly generate mazes. As the name implies, the algorithm
+relies on backtracking, and it achieves this by using recursion.
+
+Before we start, you should probably take a look at 
+Jamis's [post](https://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking). It is a good read, and it
+inspired me to write this one.
+
+In this post, we will see how to implement the algorithm in Python and will use the [OpenCV](https://opencv.org/) library
+to actually draw the maze. Here is an example of the final output:
+
+![Example of a maze made using recursive backtracking](/images/backtracking.png "Example of a Maze made using recursive backtracking")
+
+## Explenation
+
+You might have heard of recursive backtracking as an algorithm to solve mazes, or more generally find paths in a graph.
+The basic idea is very straightforward. In fact, it might be something that you subconsciously do for simple mazes.
+Take a path and keep going until you hit a dead-end. Then, retrace your path until you get to a point where you can start
+choosing paths again. Do this until you reach the destination.
+
+Now you might wonder, how is an algorithm that solves mazes is also able to create them. It's very simple. Instead of
+walls being cells that determine what a dead-end is, we use previously visited cells. What is a cell exactly? Instead
+of being in a maze, imagine we are in a grid now. the space between the walls is now a cell. Furthermore, as we move in
+the maze, we will "breakdown" these walls, and mark each cell we visit.
+
+All of this becomes easier once we list the steps of the algorithm: 
+
+
+1. Select a random cell to start.
+2. Choose a random adjacent cell. Only create a passage if that cell has not been visited yet.
+3. Repeat the process until there are no more adjacent cells to choose from.
+4. Start backtracking until you can choose a cell again.
+5. The algorithm is done when you return to the starting cell.
+
+Here is a GIF showing the algorithm as it carves passages and creates the maze. White cells represent unvisited cells,
+black cells represent walls, and gray cells represent visited cells.
+
+<ImgExtra src="/images/backtracking.gif" alt="The process of a maze being made" width={600} />
+
+With all of that said, let's get working on the actual code and build the algorithm ourselves.
+
+## Set Up
+
+The set up for this project is very simple. The language we will be using is Python. There are a few external libraries
+required for this project:
+
+### Numpy
+
+Numpy is a very fast Python library used for working with multi-dimensional arrays. If you haven't noticed by now, our
+maze is merely a 2d array. To install Numpy, run the following command:
+
+```
+pip install numpy
+```
+
+### OpenCV
+
+OpenCV is a library designed mainly for computer-vision and image processing. Since it has very nice pixel-based drawings,
+we can use it for our project. To install OpenCV, run the following command:
+
+```
+pip install opencv-python
+```
+
+## Code
+
+We begin by importing the libraries into our python code.
+
+```python
+import random
+from enum import Enum
+import numpy as np
+import cv2
+import sys
+```
+
+We can check that we have imported OpenCV correctly by adding the following to the beginning of our code:
+
+```python
+print("Using OpenCV version: {}".format(cv2.__version__))
+```
+
+If the library is installed correctly, you should get the version number of the OpenCV that you are using.
+
+With the libraries all set up, we can move to implement the algorithm. One way to do this is to put our algorithm
+inside a function, and just call that function whenever we need it. This works, but as the project gets bigger and
+we introduce more algorithms and features, it might become a hassle to manage all of these functions. Instead, what
+we will do is encapsulate our algorithm inside a class. Then these classes contain the function(s) that are responsible
+for creating the maze.
+
+```python
+class Backtracking:
+	def __init__(self):
+		pass
+```
+
+So what are the attributes that we need? Firstly, we need to know the height and width of the maze that we are making.
+Then, we need to take the path that we will store the Maze's image. Finally, I am going to add another parameter,
+which is going to be a boolean determining if at the end we want to see the maze created or not. It is not necessary,
+but it could come in handy for some projects.
+
+```python
+def __init__(self, height, width, path, display_maze):
+	self.width = width
+	self.height = height
+	self.path = path
+	self.display_maze = display_maze
+```
+
+Now we are ready to build our grid. We want the edges of our grid to be walls. After all, what sort of maze has no outer
+walls? Then, just like a normal grid, we will alternate between cells and walls, both horizontally and vertically.
+We will place this code in a function called create_maze(), since it will also give us the final version of the maze.
+
+```python
+def create_maze(self):
+	maze = np.ones((self.height, self.width), dtype=np.float)
+	
+	for i in range(self.height):
+		for j in range(self.width):
+			if i%2 == 1 or j %2 == 1:
+				maze[i, j] = 0
+```
+
+In the first line after the function deceleration, we use numpy to create a 2d array. At this point, this array is
+the grid, but later on, it will turn into the maze, hence the name. The size of this array is the height and width,
+and we will fill it with 1. 1 in grayscale represents white, which we are using to denote unvisited cells.
+
+Then, in the for loop, we go through the maze and change all the odd rows and columns to 0, black, which we are using
+to denote the walls. This will give us the desired alternating pattern of a grid.
+
+Now, a keen eye might notice a problem here. What if our algorithm ends up on one of the unvisited cells on the edge?
+Then as it is examining its surroundings, it might try to check outside of the array. We can handle each edge and corner
+individually, but we can also apply a trick. Add an outer layer to the maze, and make every spot on this outer layer a
+visited node. This way, the algorithm can check places that are indeed outside of the maze, but still in the array,
+and since they are marked in advance, it will never try to go to these cells. This will save us quite a bit of overhead.
+
+To add this to our code, we must also make sure that the height and width of our maze, including the outer visited layer,
+is odd. If this sounds confusing, try to draw a grid, with an outer layer and all edges being walls, and it will be
+obvious why. So now we have this code: 
+
+```python
+class Backtracking:
+	def __init__(self, height, width, path, displayMaze):
+		# adjust the width and height for the grid
+		if width % 2 == 0:
+			width += 1
+		if height % 2 == 0:
+			height += 1
+
+		self.width = width
+		self.height = height
+		self.path = path
+		self.displayMaze = displayMaze
+
+	def createMaze(self):
+		maze = np.ones((self.height, self.width), dtype=np.float)
+
+		for i in range(self.height):
+			for j in range(self.width):
+				if i % 2 == 1 or j % 2 == 1:
+					maze[i, j] = 0 # walls
+				if (i == 0 or j == 0 or i == self.height - 1 or j == self.width - 1):
+					maze[i, j] = 0.5  # visited		
+```
+
+We are using 0.5, gray, to denote visited cells.
+
+With our grid done, it is time to implement the algorithm itself. Remember that the algorithm is recursive, meaning
+that it will call itself. As a result, we are placing it in its own function. I am going to call this function
+generator and place it in the Backtracking class. The function requires 3 inputs: the current x and y location
+that it is at, and the grid it is in.
+
+```python
+def generate(self, cx, cy, grid):
+	pass
+```
+
+The first step is to mark the current location as visited. Then we want to check if we have any adjacent cells to visit
+or not.
+
+```python
+def generate(self, cx, cy, grid):
+	grid[cy, cx] = 0.5
+
+	if (grid[cy - 2, cx] == 0.5 and grid[cy + 2, cx] == 0.5 and
+		grid[cy, cx - 2] == 0.5 and grid[cy, cx + 2] == 0.5):
+		pass
+	else:
+		pass
+```
+
+At first it might seem a bit confusing why we have `grid[cy, cx]` and not `grid[cx, cy]`. This is due to how numpy defines
+its axes. Axis 0 is the rows of the array, which means it's the height. Axis 1 is the columns of the array, which means it's the width.
+
+Now what if we are surrounded on all sides by visited cells? Well, then nothing. We are not going to do anything and will
+breakout of one function call. What if there is a path though? In that case, we want to randomly choose a direction, and
+continue going that way.
+
+Here is where the enum comes in handy. We can represent each direction with a number, but remembering which number is up,
+and which one is down isn't optimal. Instead, we will use enums. Outside of the Backtracking class, declare an enum for
+directions:
+
+```python
+class Directions(Enum):
+	UP = 1
+	DOWN = 2
+	LEFT = 3
+	RIGHT = 4
+```
+
+Passing the class Enum as a parameter means that Directions will inherit from Enum, and therefore be an enum too.
+Note that you can create an enum (or just constants) for the colors on our grid. Here, I haven't done that since that
+way it is a bit harder to see the relation between the numbers and grayscale colors, but that's just personal preference.
+
+Now we are ready to randomly select a direction. 
+
+```python
+if (grid[cy - 2, cx] == 0.5 and grid[cy + 2, cx] == 0.5 and grid[cy, cx - 2] == 0.5 and grid[cy, cx + 2] == 0.5):
+	pass
+else:
+	li = [1, 2, 3, 4]
+	while len(li) > 0:
+		dir = random.choice(li)
+		li.remove(dir)
+
+		if dir == Directions.UP.value:
+			nx = cx
+			mx = cx
+			ny = cy - 2
+			my = cy - 1
+		elif dir == Directions.DOWN.value:
+			nx = cx
+			mx = cx
+			ny = cy + 2
+			my = cy + 1
+		elif dir == Directions.LEFT.value:
+			nx = cx - 2
+			mx = cx - 1
+			ny = cy
+			my = cy
+		elif dir == Directions.RIGHT.value:
+			nx = cx + 2
+			mx = cx + 1
+			ny = cy
+			my = cy
+		else:
+			nx = cx
+			mx = cx
+			ny = cy
+			my = cy
+
+		if grid[ny, nx] != 0.5:
+			grid[my, mx] = 0.5
+			self.generator(nx, ny, grid)
+```
+
+After the else, we choose one element randomly from it and get some values corresponding to that direction. For instance,
+if we are traveling upwards, then the new empty cell to go to is located 2 units above (cy) and the wall to carve through
+is 1 unit above (my). Since we are moving in the up direction, we do not need to change the x values. Note that the else
+statement should never run, since at this point there is always 1 unvisited adjacent cell, but I kept it there.
+
+Lastly, we want to check if this randomly selected adjacent cell is visited or not. If it is, then go and select another
+cell to move to. If not, then carve the wall, and then do the same process, this time on the new cell.
+
+Take a look at the while statement. Let's say at a cell, we have two options to go to: down and left. By chance, we start
+moving towards the bottom of the maze. Then we start hitting dead-ends and get back to this original cell. Now since we
+have this while statement, we have 3 more directions to check, only one of them unvisited. Therefore this time we will go
+towards the left side of the maze. Now you can see how all possible directions are checked.
+
+At some point, the algorithm will find no adjacent cells to visit and will backtrack all the way to where it started, at
+this point, we have our maze. Luckily we don't have to write any code for this, as this is when the function finishes.
+
+Back in our create_maze() function, we must call our generator function. For us to make the function even more random, we
+select the starting points randomly. Make sure that the starting position is an unvisited cell, and not a wall or an outer
+layer part of the maze. 
+
+```python
+# ... create_maze() ...
+
+# select from [2, 4, 6, ...] which is guaranteed to be unvisited
+sx = random.choice(range(2, self.width - 2, 2))
+sy = random.choice(range(2, self.height - 2, 2))
+
+self.generator(sx, sy, maze)
+```
+
+Now, maze will contain the ... maze. It's just that now everything that is not a wall is in gray, so we will just loop
+through the maze and change the color back to white.
+
+```python
+# ... create_maze() ...
+
+for i in range(self.height):
+	for j in range(self.width):
+		if maze[i, j] == 0.5:
+			maze[i, j] = 1
+```
+
+We will add the entrance and exit to our maze. You can write additional code to place it somewhere random and valid in
+the maze, but for now, I'll just put them in the top left and bottom right.
+
+```python
+# ... create_maze() ...
+
+maze[1, 2] = 1
+maze[self.height - 2, self.width - 3] = 1
+```
+
+Lastly, we want to know if we should display the maze we just created, and save it as an image.
+
+```python
+# ... create_maze() ...
+
+if self.display_maze: # display the maze
+	cv2.namedWindow('Maze', cv2.WINDOW_NORMAL)
+	cv2.imshow('Maze', maze)
+	cv2.waitKey(0)
+	cv2.destroyAllWindows()
+
+			# save the maze
+			maze = maze * 255.0
+			cv2.imwrite(self.path, maze)
+```
+
+If you run into trouble creating bigger mazes, you can increase the recursion limit by using the following code:
+
+```python
+sys.setrecursionlimit(8000)
+```
+
+You can take a look at the final code on [GitHub](https://github.com/AryanAb/MazeGenerator/blob/master/backtracking.py).
+
+## Closing Notes
+
+Recursive backtracking is only one of many algorithms used to create mazes. It is quite easy to understand and code in
+most programming languages. It also utilizes one of the most important concepts in computer science, namely recursion.
+In addition, the mazes that it creates truly look random. Although for larger mazes it will be slow and would consume a
+large amount of memory, it works superbly on small to medium-sized mazes.
+
+You can find the full code for this algorithm and a few other maze generating algorithms over on my GitHub. I acknowledge
+that this is merely a student project, and the code might have certain problems and could definitely be improved upon.
+Any feedback is greatly appreciated. 
+
+export default ({children, meta}) => (<Post meta={meta}>{children}</Post>);
