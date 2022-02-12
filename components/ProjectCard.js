@@ -15,8 +15,9 @@ const ProjectCard = ({ image, title, creators, technologies, description, links 
   }, [isVisible]);
 
   const cardsAnim = useSpring({
-    from: { translateX: -15000 },
-    to: { translateX: viewed ? 0 : -15000 }
+    from: { translateX: -4000 },
+    to: { translateX: viewed ? 0 : -4000 },
+    config: { duration: 1000 }
   });
 
   return (
