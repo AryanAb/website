@@ -179,7 +179,7 @@ class Backtracking:
 			for j in range(self.width):
 				if i % 2 == 1 or j % 2 == 1:
 					maze[i, j] = 0 # walls
-				if (i == 0 or j == 0 or i == self.height - 1 or j == self.width - 1):
+				if i == 0 or j == 0 or i == self.height - 1 or j == self.width - 1:
 					maze[i, j] = 0.5  # visited		
 ```
 

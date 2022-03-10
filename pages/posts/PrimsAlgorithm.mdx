@@ -1,0 +1,256 @@
+export const meta = {
+	"image": "/images/Maze.png",
+	"title": "Maze Generator - Prim's Algorithm",
+	"authors": ["Aryan Abed-Esfahani"],
+	"summary": "In this part of the maze generation series, we will be looking at Prims algorithm and look at a simple implementation.",
+	"date": "2022-03-10",
+	"sections": ["Introduction", "Explenation", "Set Up", "Code", "Closing Notes"]
+}
+{/* end of meta data */}
+{/* during the server side rendering, the above comment is used to parse the meta data. DO NOT REMOVE IT. */}
+
+import Post from '../../components/Post'
+import parseDate from '../../lib/parseDate';
+import {ImgExtra} from '../../components/PostParts';
+
+<h1>{meta.title}</h1>
+
+<p>{meta.authors.join(', ')} - {parseDate(meta.date)}</p>
+
+## Introduction
+
+Prim's algorithm is another algorithm that could be used to generate mazes. Its end result does not look as random
+as recursive backtracking, but it's worth looking into how the algorithm works.
+
+Once again, you should check out
+Jamis's [post](https://weblog.jamisbuck.org/2011/1/10/maze-generation-prim-s-algorithm) if you want to read more.
+
+Like the previous post in the series, we will see how to implement the algorithm in Python and will use the [OpenCV](https://opencv.org/) library
+to actually draw the maze. Here is an example of the final output:
+
+![Example of a maze made using recursive backtracking](/images/prims.png "Example of a Maze made using recursive backtracking")
+
+## Explenation
+
+In recursive backtracking, we saw that we can choose an initial path, and then continuously carve a path to generate
+a maze. This method of creating a maze works, but we have limitations on the size of the maze that we can create though
+to the sheer number of recursive calls.
+
+Prim's algorithm is an alternative way of creating mazes. This method does not rely on any recursion, and thus enables
+us to generate larger mazes without having to worry about the memory. The tradeoff of this approach is that some mazes
+will look less random.
+
+Similar to recursive backtracking, Prim's also starts by selecting a random cell, and then looking at all the neighboring
+cells that it could go to. Where it differs from recursive backtracking, however, is how it starts connecting these cells.
+In Prim's algorithm, we add all of these cells to a list, and then randomly choose one to make a path to. Then, we iterate this process.
+Remember that in our implementation, we are looking at a grid, and we break down walls as we make our maze.
+
+Once again, we list the steps of the algorithm: 
+
+
+1. Select a random cell to start.
+2. Add all unvisited adjacent cells to a list.
+3. Choose one of the cells from the list, add it to the maze, and mark it as visited.
+4. Repeat steps 2 and 3 until all the cells are added to the maze.
+
+Here is a GIF showing the algorithm doing the steps above. White cells represent unvisited cells,
+black cells represent walls, and gray cells represent visited cells.
+
+<ImgExtra src="/images/prims.gif" alt="The process of a maze being made" width={600} />
+
+Let's start coding.
+
+## Set Up
+
+The set up for this project is the same as for recursive backtracking. The set up is repeated below in case that you
+might have skiped the first part of the series.
+
+### Numpy
+
+Numpy is a very fast Python library used for working with multi-dimensional arrays. If you haven't noticed by now, our
+maze is merely a 2d array. To install Numpy, run the following command:
+
+```
+pip install numpy
+```
+
+### OpenCV
+
+OpenCV is a library designed mainly for computer-vision and image processing. Since it has very nice pixel-based drawings,
+we can use it for our project. To install OpenCV, run the following command:
+
+```
+pip install opencv-python
+```
+
+## Code
+
+We begin by importing the libraries into our python code.
+
+```python
+import random
+import cv2
+import numpy as np
+```
+
+Now, we will implement a class for Prim's algorithm that will contain all the functions we will need.
+
+```python
+class Prims:
+	def __init__(self):
+		pass
+```
+
+The parametrs are the same as before. The width and height of the maze we want to create, the path to save the maze's
+image, and a boolean to know whether or not we should display the image after we're done or not.
+
+```python
+def __init__(self, height, width, path, display_maze):
+	self.width = width
+	self.height = height
+	self.path = path
+	self.display_maze = display_maze
+```
+
+The `create_maze` function works as before. It creates a grid with alternating cells and walls. The odd rows or
+columns are walls, and the rest are cells. Note that due to simplicity, we once have the outer edge be all cells
+and mark them as visited. We will represent every cell with 1, and every wall with 0.
+
+```python
+def create_maze(self):
+	maze = np.ones((self.height, self.width), dtype=np.float)
+	
+	for i in range(self.height):
+		for j in range(self.width):
+			if i%2 == 1 or j %2 == 1:
+				maze[i, j] = 0
+			if i == 0 or j == 0 or i == self.height - 1 or j == self.width - 1:
+				maze[i, j] = 0.5  # visited	
+```
+
+We are using 0.5, gray, to denote visited cells.
+
+With our grid done, it is time to implement the algorithm itself. The function `prims` will contain the logic for
+the algorithm. The function will recieve two coordinates as the starting point and the grid that we previously
+generated.
+
+```python
+def prims(x, y, grid):
+    grid[y, x] = 0.5  # mark the starting cell as part of the maze
+    
+    adjacent = set()
+    
+    if grid[y + 2, x] == 1:
+        adjacent.add((y + 2, x))
+    if grid[y - 2, x] == 1:
+        adjacent.add((y - 2, x))
+    if grid[y, x + 2] == 1:
+        adjacent.add((y, x + 2))
+    if grid[y, x - 2] == 1:
+        adjacent.add((y, x - 2))
+```
+
+We create an empty set called adjacent. This list will contatin all the possible cells that could be added to the
+mazes and are adjacent to the current cell.
+
+Now we will enter a loop. The algorithm finishes when all the cells are added to the maze. In other words, when 
+there are no adjacent cells left. So we should exit the loop and finish the algorithm once the set is empty.
+Inside the loop, we choose a random cell from the adjacent set and assign the new coordinates to that cell. 
+
+```python
+while adjacent:
+	cell = random.choice(tuple(adjacent))
+	ny = cell[0]
+    nx = cell[1]
+```
+
+After we choose a cell to go to, we need to carve a passage from it to an existing part of the maze. For this
+we will create an empty tuple named `directions`. The `directions` tuple will be filled with possible
+directions that the passage could be carved through. 
+
+```python
+grid[ny, nx] = 0.5  # mark cell as visited
+
+directions = []
+
+# if the adjacant cells are part of the maze, crave a passage to one of them
+if grid[ny + 2, nx] == 0.5:
+    directions.append(1)
+if grid[ny - 2, nx] == 0.5:
+    directions.append(2)
+if grid[ny, nx + 2] == 0.5:
+    directions.append(3)
+if grid[ny, nx - 2] == 0.5:
+    directions.append(4)
+
+dir = random.choice(directions)
+
+if dir == 1:
+    grid[ny + 1, nx] = 0.5
+elif dir == 2:
+    grid[ny - 1, nx] = 0.5
+elif dir == 3:
+    grid[ny, nx + 1] = 0.5
+elif dir == 4:
+    grid[ny, nx - 1] = 0.5
+```
+
+Keep in mind that instead of numbers like 1, 2, 3 and 4 you can use Enums. We used Enums in the last tutorial,
+so you can use the same code for this one as well. After we find all the possible directions, we choose one by
+random and carve the passage. 
+
+Now we have a new cell and we should find all the adjacent cells to the new one. 
+
+```python
+# if the adjacent cells are not part of the maze, add them to the set
+if grid[ny + 2, nx] == 1:
+    adjacent.add((ny + 2, nx))
+if grid[ny - 2, nx] == 1:
+    adjacent.add((ny - 2, nx))
+if grid[ny, nx + 2] == 1:
+    adjacent.add((ny, nx + 2))
+if grid[ny, nx - 2] == 1:
+    adjacent.add((ny, nx - 2))
+```
+
+Lastly, remember that the new cell was at some point an adjacent cell itself. Therefore it needs to be removed from
+the list because it clearly cannont be chosen again.
+
+```python
+adjacent.remove(cell)  # reomve the cell from the set
+```
+
+Now we just need to draw the maze and give it an entrance and display it. This piece of code is identical to what we wrote in the previous tutorial. 
+
+```python
+if __name__ == "__main__":
+    sx = random.choice(range(2, width - 2, 2))
+    sy = random.choice(range(2, height - 2, 2))
+    
+    prims(sx, sy, maze)
+    
+    for i in range(height):
+        for j in range(width):
+            if not maze[i, j] == 0:
+                maze[i, j] = 1
+    
+    maze[1, 2] = 1
+    maze[height - 2, width - 3] = 1
+    
+    cv2.namedWindow('Maze', cv2.WINDOW_NORMAL)
+    cv2.imshow('Maze', maze)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+```
+
+## Closing Notes
+
+Prim's algorithm is a quick simple algorithm for implementing maze generation. It gives us insight on how we can bypass
+some of the problems we faced when using recursive backtracking, and it shows us how bypassing some of those
+problems has affected our final output.
+
+You can find the full code for this algorithm and a few other maze generating algorithms over on my GitHub. I acknowledge
+that this is merely a student project, and the code might have certain problems and could definitely be improved upon.
+Any feedback is greatly appreciated. 
+
+export default ({children, meta}) => (<Post meta={meta}>{children}</Post>);
