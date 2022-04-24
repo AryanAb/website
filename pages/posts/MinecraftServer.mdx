@@ -86,7 +86,7 @@ browser.
 Now in our instance environment, we want to create a directory to keep our server related files and folders. Type the
 following command:
 
-```
+```bash
 cd /
 sudo mkdir srv
 cd srv
@@ -109,7 +109,7 @@ The only argument that you must provide is the URL of the file you want to downl
 Then at the directory where you are storing the server, run the command below with the URL replaced with what you copied.
 At the time of writing this guide, that will be: 
 
-```
+```bash
 sudo wget https://launcher.mojang.com/v1/objects/a16d67e5807f57fc4e550299cf20226194497dc2/server.jar
 ```
 
@@ -121,7 +121,7 @@ minecraft_server.
 
 To begin with, create a folder where you will save the java files.
 
-```
+```bash
 cd /
 sudo mkdir java
 cd java
@@ -131,13 +131,13 @@ Go to [OpenJDK's website](https://openjdk.java.net/), find the version of Java t
 Linux/x64 version, and copy the link. Finally, run the command below with the URL replaced with what you just copied.
 At the time of writing this guide, that will be:
 
-```
+```bash
 sudo wget https://download.java.net/java/GA/jdk16.0.2/d4a915d82b4c4fbb9bde534da945d746/7/GPL/openjdk-16.0.2_linux-x64_bin.tar.gz
 ```
 
 This will download a tar.gz file. To unzip it, run the following command:
 
-```
+```bash
 sudo tar -xf openjdk-16.0.1_linux-x64_bin.tar.gz
 ```
 
@@ -148,7 +148,7 @@ Now that we have Java installed, we want to be able to call the command and use 
 `sudo`, we can skip adding the command to `PATH` environment variable and add it directly to the `sudo` path. To do that, 
 run the command:
 
-```
+```bash
 sudo visudo
 ```
 
@@ -156,8 +156,8 @@ This will start a `vim` session with the sudo config file. If you have not used 
 you can edit and save documents using it. Edit the file by adding the Java bin path to the end of `secure_path`. 
 In our case that would be:
 
-```
-secure_path="...:/java/jdk-16.0.1"	
+```bash
+secure_path="...:/java/jdk-16.0.1"
 ```
 
 ## Run Server
@@ -165,7 +165,7 @@ secure_path="...:/java/jdk-16.0.1"
 Now that we have everything set up, we can run the server. Go the the directory where you saved minecraft_server and run
 the command to boot up minecraft_server:
 
-```
+```bash
 sudo java -Xmx8G -jar server.jar nogui
 ```
 

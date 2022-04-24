@@ -69,7 +69,7 @@ required for this project:
 Numpy is a very fast Python library used for working with multi-dimensional arrays. If you haven't noticed by now, our
 maze is merely a 2d array. To install Numpy, run the following command:
 
-```
+```bash
 pip install numpy
 ```
 
@@ -78,7 +78,7 @@ pip install numpy
 OpenCV is a library designed mainly for computer-vision and image processing. Since it has very nice pixel-based drawings,
 we can use it for our project. To install OpenCV, run the following command:
 
-```
+```bash
 pip install opencv-python
 ```
 
@@ -202,10 +202,8 @@ or not.
 def generate(self, cx, cy, grid):
 	grid[cy, cx] = 0.5
 
-	if (grid[cy - 2, cx] == 0.5 and grid[cy + 2, cx] == 0.5 and
-		grid[cy, cx - 2] == 0.5 and grid[cy, cx + 2] == 0.5):
-		pass
-	else:
+	if grid[cy - 2, cx] != 0.5 or grid[cy + 2, cx] != 0.5 or
+		grid[cy, cx - 2] != 0.5 or grid[cy, cx + 2] != 0.5:
 		pass
 ```
 
@@ -235,9 +233,7 @@ way it is a bit harder to see the relation between the numbers and grayscale col
 Now we are ready to randomly select a direction. 
 
 ```python
-if (grid[cy - 2, cx] == 0.5 and grid[cy + 2, cx] == 0.5 and grid[cy, cx - 2] == 0.5 and grid[cy, cx + 2] == 0.5):
-	pass
-else:
+if grid[cy - 2, cx] != 0.5 or grid[cy + 2, cx] != 0.5 or grid[cy, cx - 2] != 0.5 or grid[cy, cx + 2] == 0.5:
 	li = [1, 2, 3, 4]
 	while len(li) > 0:
 		dir = random.choice(li)
