@@ -22,7 +22,7 @@ import { getProjectsData } from '../lib/projects';
 export async function getStaticProps() {
   const experiencesData = getExperiencesData().experiences;
   const projectsData = getProjectsData().projects.slice(0, 4);
-  const allPostsData = getSortedPostsData().slice(0, 4);
+  const allPostsData = (await getSortedPostsData()).slice(0, 4);
   const toolchainData = getToolchainData();
   return {
     props: {

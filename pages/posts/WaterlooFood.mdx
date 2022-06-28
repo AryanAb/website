@@ -1,0 +1,22 @@
+export const meta = {
+	"image": "/images/Maze.png",
+	"title": "Review of Every Food Place in Waterloo",
+	"authors": ["Aryan Abed-Esfahani"],
+	"summary": "",
+	"date": "2022-06-10",
+	"sections": ["Introduction"]
+}
+{/* end of meta data */}
+{/* during the server side rendering, the above comment is used to parse the meta data. DO NOT REMOVE IT. */}
+
+import Post from "../../components/Post";
+import parseDate from "../../lib/parseDate";
+import { ImgExtra } from "../../components/PostParts";
+
+<h1>{meta.title}</h1>
+
+<p>{meta.authors.join(", ")} - {parseDate(meta.date)}</p>
+
+## Introduction
+
+export default ({ children, meta }) => <Post meta={meta}>{children}</Post>;
