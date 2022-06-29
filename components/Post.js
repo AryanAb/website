@@ -7,9 +7,6 @@ import Head from "next/head";
 import { MDXProvider } from "@mdx-js/react";
 import { H1, H2, H3, H4, P, Img } from "./PostParts";
 
-import { useRef } from 'react';
-import { Html } from "next/document";
-
 const Post = ({ children, meta }) => {
 
   const components = {
@@ -37,7 +34,6 @@ const Post = ({ children, meta }) => {
         <meta property="og:description" content={meta.summary} />
 
       </Head>
-      <body>
         <ScrollIndicator />
         <div className={postStyles.wrapper}>
           <div className={postStyles.sidenav}>
@@ -53,7 +49,6 @@ const Post = ({ children, meta }) => {
             {children}
           </article>
         </div>
-      </body>
     </MDXProvider>
   );
 };

@@ -6,8 +6,6 @@ export const meta = {
 	"date": "2022-06-10",
 	"sections": ["Introduction"]
 }
-{/* end of meta data */}
-{/* during the server side rendering, the above comment is used to parse the meta data. DO NOT REMOVE IT. */}
 
 import Post from "../../components/Post";
 import parseDate from "../../lib/parseDate";
@@ -19,4 +17,14 @@ import { ImgExtra } from "../../components/PostParts";
 
 ## Introduction
 
-export default ({ children, meta }) => <Post meta={meta}>{children}</Post>;
+Hello $\frac{1}{2}$.
+
+$$
+\dot{\theta} = \frac{d\theta}{dt}
+$$
+
+```python
+print("Hello World!")
+```
+
+export default ({ children }) => <Post meta={meta}>{children}</Post>;

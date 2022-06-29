@@ -5,7 +5,7 @@ import { getSortedPostsData } from "../lib/posts";
 import Head from "next/head";
 
 export async function getStaticProps() {
-  const postsData = getSortedPostsData();
+  const postsData = await getSortedPostsData();
   return {
     props: {
       postsData

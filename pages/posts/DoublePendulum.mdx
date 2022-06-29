@@ -1,0 +1,23 @@
+export const meta = {
+	"image": "/images/Minecraft.png",
+	"title": "Double Pendulum",
+	"authors": ["Aryan Abed-Esfahani"],
+	"summary": "",
+	"date": "2022-06-29",
+	"sections": []
+}
+
+import Post from '../../components/Post'
+import parseDate from '../../lib/parseDate';
+import {ImgExtra} from '../../components/PostParts';
+import DoublePendulum from '../../components/DoublePendulum';
+
+<h1>{meta.title}</h1>
+
+<p>{meta.authors.join(", ")} - {parseDate(meta.date)}</p>
+
+<DoublePendulum />
+
+Still working on the blog post :)
+
+export default ({children}) => <Post meta={meta}>{children}</Post>;
