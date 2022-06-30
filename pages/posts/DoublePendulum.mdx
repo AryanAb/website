@@ -206,7 +206,7 @@ function k(t1, t2, p1, p2) {
 }
 ```
 
-The next step is to create our RK4 method function. This function will take 4 inputs: $\theta_1$, $\theta_2$, $p_1, and $p_2$.
+The next step is to create our RK4 method function. This function will take 4 inputs: $\theta_1$, $\theta_2$, $p_1$, and $p_2$.
 It will then do the computation explained above and return 4 outputs, the new values for $\theta_1$, $\theta_2$, $p_1$,
 and $p_2$ after taking a step $h$. To do this, we can make the function take an array of 4 values as an input, and then
 return an array of 4 values at the end. This way, we can directly feed the functions output back to it as input and get
@@ -298,8 +298,8 @@ function draw() {
 	background(220);
 
 	inits = RK4(inits);
-	const t1 = init[0];
-	const t2 = init[1];
+	const t1 = inits[0];
+	const t2 = inits[1];
 
 	// using trigonometry to convert angles to cartesian coordinates
 	// offset 200 to put the origin in middle of the canvas
