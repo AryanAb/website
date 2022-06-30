@@ -76,7 +76,7 @@ actually does.
 We first move an amount $k_1$ in the $y$ direction based on the current slope. Then, we take the slope at halfway point
 between where the current step, and where the next step would be if we moved $k_1$ to get a slope $k_2$. We would
 repeat the same process this time with $k_2$ to get $k_3$. Finally we take a full step, and get the value of slope
-at the end point to get $k_4. Then a linear combination of $k_1$, $k_2, $k_3$, and $k_4$ would give us an approximation
+at the end point to get $k_4$. Then a linear combination of $k_1$, $k_2, $k_3$, and $k_4$ would give us an approximation
 for the next point. This process has a step error of $O(h^4)$, which is not bad at all. The steps are as follows:
 $$
 k_1 = h \cdot f(t_n, y_n)
@@ -124,7 +124,7 @@ $$
 n_1 = h \cdot k(\theta_1, \theta_2, p_1, p_2)
 $$
 What can we do for the second step? Well, the variable $\theta_1$ has moved $k_1$ amount, $\theta_2$ has moved $l_1$
-amount, and so on. We can now see where the halway point would be for each of these variables:
+amount, and so on. We can now see where the halfway point would be for each of these variables:
 $$
 k_2 = h \cdot f(\theta_1 + \frac{k_1}{2}, \theta_2 + \frac{l_1}{2}, p_1 + \frac{m_1}{2}, p_2 + \frac{n_1}{2})
 $$
