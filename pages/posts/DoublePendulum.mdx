@@ -4,7 +4,7 @@ export const meta = {
 	"authors": ["Aryan Abed-Esfahani"],
 	"summary": "",
 	"date": "2022-06-29",
-	"sections": []
+	"sections": ["Introduction", "The Physics", "RK4 Method", "Drawing", "Closing Notes"]
 }
 
 import Post from '../../components/Post'
@@ -12,12 +12,324 @@ import parseDate from '../../lib/parseDate';
 import {ImgExtra} from '../../components/PostParts';
 import DoublePendulum from '../../components/DoublePendulum';
 
-<h1>{meta.title}</h1>
+# {meta.title}
 
-<p>{meta.authors.join(", ")} - {parseDate(meta.date)}</p>
+{meta.authors.join(", ")} - {parseDate(meta.date)}
 
 <DoublePendulum />
 
-Still working on the blog post :)
+## Introduction
+
+In this blog post, I will be going through the steps to create an animation for the double pendulum problem.
+The final result should look something like above. I will be using JavaScript and p5.js through out this post.
+We will first look at some of the basic physics behind the system, then how to numerically solve it, and finally
+how to draw it.
+
+## The Physics
+
+For a general double pendulum proble, the physics could get surprisingly complicated. For the sake of simplicity then,
+let's make some assumptions. Assume that the connections to the pendulums are unfiorm rigid bodies of equal length $l$
+and equal mass $m$. Let $\theta_1$ and $\theta_2$ be the angles that that the first and second rod make with the top of
+the page respectively. Let $p_1$ and $p_2$ be the linear momentum of the first and second rod respectively.
+
+Attempting to solve this system using Newtonian mechanics would be foolish. Insead, we make use of Lagrangian mechanics.
+In Lagrangian mechanics there is the concept of Lagrangian, which is the difference between the kinetic and potential
+energy:
+$$
+L = T - U.
+$$
+Using this we can get Lagrange equations of motion:
+$$
+\frac{\partial L}{\partial x_i} - \frac{d}{dt}\frac{\partial L}{\partial \dot{x}_i} = 0
+$$
+where $x_i$ is a basis vector in our coordinate system and $\dot{x}_i = dx_i/dt$, a notation that we will keep using. I have not given any reason for why any of this is true.
+If you are interested in the derivation and a more in depth explenation, you can read chapters 6 and 7 of
+_Classical Dynamics of Particles and Systems_ by Marion and Thornton.
+
+Using the above information, we can find a relation for each pendulum. I will skip the math work here, but you can check
+[Wikipedia page](https://en.wikipedia.org/wiki/Double_pendulum#Lagrangian) to see how it's done. We end up with a system
+of 4 ordinary differential equations with 4 functions.
+$$
+\dot{\theta_1} = \frac{6(2p_1 - 3\cos(\theta_1 - \theta_2)p_2)}{ml^2(16 - 9\cos^2(\theta_1 - \theta_2))}
+$$
+$$
+\dot{\theta_2} = \frac{6(8p_2 - 3\cos(\theta_1 - \theta_2)p_1)}{ml^2(16 - 9\cos^2(\theta_1 - \theta_2))}
+$$
+$$
+\dot{p}_1 = \frac{-1}{2}ml^2(\dot{\theta}_1\dot{\theta}_2\sin(\theta_1 - \theta_2) + 3\frac{g}{l}\sin \theta_1)
+$$
+$$
+\dot{p}_2 = \frac{-1}{2}ml^2(-\dot{\theta}_1\dot{\theta}_2\sin(\theta_1 - \theta_2) + \frac{g}{l}\sin \theta_2)
+$$
+It turns out that there is no way to analytically solve this system of ODEs. However, we can still use a numerical method.
+
+## RK4 Method
+
+The Runge-Kutta methods are a family of methods to solve ordinary differential equations. Here, we will use the Runge-Kutta
+method of order 4, also known as RK4. Let's see how RK4 method actually works before we try to implement it.
+
+Let $y(t)$ be a once differentiable function. Then define $f(t, y(t)) = y'(t)$. Let $h$ be our step size. This is the
+amount that $t$ goes forward to approximate the behaviour of $y$. We adopt the notation that $t_n$ is our $n$-th step
+and $y_t \approx y(t)$. With all the defininitions and notations out of the way, we can now express what the method
+actually does.
+
+We first move an amount $k_1$ in the $y$ direction based on the current slope. Then, we take the slope at halfway point
+between where the current step, and where the next step would be if we moved $k_1$ to get a slope $k_2$. We would
+repeat the same process this time with $k_2$ to get $k_3$. Finally we take a full step, and get the value of slope
+at the end point to get $k_4. Then a linear combination of $k_1$, $k_2, $k_3$, and $k_4$ would give us an approximation
+for the next point. This process has a step error of $O(h^4)$, which is not bad at all. The steps are as follows:
+$$
+k_1 = h \cdot f(t_n, y_n)
+$$
+$$
+k_2 = h \cdot f(t_n + \frac{h}{2}, y_n + \frac{k_1}{2})
+$$
+$$
+k_3 = h \cdot f(t_n + \frac{h}{2}, y_n + \frac{k_2}{2})
+$$
+$$
+k_4 = f(t_n + h, y_n + k_3)
+$$
+$$
+y_{n+1} = y_n + \frac{1}{6}(k_1 + 2k_2 + 2k_3 + k_4)
+$$
+Now the question is how to extend this to a system of ODEs. Let's consider our system of equations. $\dot{\theta}_1$
+and $\dot{\theta}_2$ depend on the values $\theta_1$, $\theta_2$, $p_1$, and $p_2$. $\dot{p}_1$ and $\dot{p}_2$ depend
+on $\theta_1$, $\theta_2$, $\dot{\theta}_1$, and $\dot{\theta}_2$, the latter of which depend on $\theta_1$, $\theta_2$, 
+$p_1$, and $p_2$ as we saw. Therefore, all four of these equations can be represented as functions with the same 4
+arguments.
+$$
+\dot{\theta}_1 = f(\theta_1, \theta_2, p_1, p_2)
+$$
+$$
+\dot{\theta}_2 = g(\theta_1, \theta_2, p_1, p_2)
+$$
+$$
+\dot{p}_1 = j(\theta_1, \theta_2, p_1, p_2)
+$$
+$$
+\dot{p}_2 = k(\theta_1, \theta_2, p_1, p_2)
+$$
+Now, assuming the initial conditions are known, we have all the information to do the first step of RK4 on all of these.
+$$
+k_1 = h \cdot f(\theta_1, \theta_2, p_1, p_2)
+$$
+$$
+l_1 = h \cdot g(\theta_1, \theta_2, p_1, p_2)
+$$
+$$
+m_1 = h \cdot j(\theta_1, \theta_2, p_1, p_2)
+$$
+$$
+n_1 = h \cdot k(\theta_1, \theta_2, p_1, p_2)
+$$
+What can we do for the second step? Well, the variable $\theta_1$ has moved $k_1$ amount, $\theta_2$ has moved $l_1$
+amount, and so on. We can now see where the halway point would be for each of these variables:
+$$
+k_2 = h \cdot f(\theta_1 + \frac{k_1}{2}, \theta_2 + \frac{l_1}{2}, p_1 + \frac{m_1}{2}, p_2 + \frac{n_1}{2})
+$$
+$$
+l_2 = h \cdot g(\theta_1 + \frac{k_1}{2}, \theta_2 + \frac{l_1}{2}, p_1 + \frac{m_1}{2}, p_2 + \frac{n_1}{2})
+$$
+$$
+m_2 = h \cdot j(\theta_1 + \frac{k_1}{2}, \theta_2 + \frac{l_1}{2}, p_1 + \frac{m_1}{2}, p_2 + \frac{n_1}{2})
+$$
+$$
+n_2 = h \cdot k(\theta_1 + \frac{k_1}{2}, \theta_2 + \frac{l_1}{2}, p_1 + \frac{m_1}{2}, p_2 + \frac{n_1}{2})
+$$
+As you might guess, the other steps follow similarly.
+$$
+k_3 = h \cdot f(\theta_1 + \frac{k_2}{2}, \theta_2 + \frac{l_2}{2}, p_1 + \frac{m_2}{2}, p_2 + \frac{n_2}{2})
+$$
+$$
+l_3 = h \cdot g(\theta_1 + \frac{k_2}{2}, \theta_2 + \frac{l_2}{2}, p_1 + \frac{m_2}{2}, p_2 + \frac{n_2}{2})
+$$
+$$
+m_3 = h \cdot j(\theta_1 + \frac{k_2}{2}, \theta_2 + \frac{l_2}{2}, p_1 + \frac{m_2}{2}, p_2 + \frac{n_2}{2})
+$$
+$$
+n_3 = h \cdot k(\theta_1 + \frac{k_2}{2}, \theta_2 + \frac{l_2}{2}, p_1 + \frac{m_2}{2}, p_2 + \frac{n_2}{2})
+$$
+
+$$
+k_4 = h \cdot f(\theta_1 + k_3, \theta_2 + l_3, p_1 + m_3, p_2 + n_3)
+$$
+$$
+l_4 = h \cdot g(\theta_1 + k_3, \theta_2 + l_3, p_1 + m_3, p_2 +  n_3)
+$$
+$$
+m_4 = h \cdot j(\theta_1 + k_3, \theta_2 + l_3, p_1 + m_3, p_2 +  n_3)
+$$
+$$
+n_4 = h \cdot k(\theta_1 + k_3, \theta_2 + l_3, p_1 + m_3, p_2 +  n_3)
+$$
+We will show the new values for each of the variables with a prime symbol.
+$$
+\theta'_1 = \theta_1 + \frac{1}{6}(k_0 + 2k_1 + 2k_2 + 2k_3)
+$$
+$$
+\theta'_2 = \theta_2 + \frac{1}{6}(l_0 + 2l_1 + 2l_2 + 2l_3)
+$$
+$$
+p'_1 = p_1 + \frac{1}{6}(m_0 + 2m_1 + 2m_2 + 2m_3)
+$$
+$$
+p'_2 = p_2 + \frac{1}{6}(n_0 + 2n_1 + 2n_2 + 2n_3)
+$$
+
+With a numerical algorithm at our disposal, we can write a program to solve this system for us. First, we will define
+the constants that we will be using.
+
+```js
+const m = 1; // mass of the rods
+const l = 60; // length of the rods
+const gr = -9.81; // Earth's gravitational acceleration
+```
+
+Now, let's make the functions $f$, $g$, $j$, and $k$.
+
+```js
+function f(t1, t2, p1, p2) {
+	return 6/(m*l*l) * (2 * p1 - 3*Math.cos(t1 - t2) * p2)/(16 - 9*Math.cos(t1 - t2)*Math.cos(t1 - t2));
+}
+
+function g(t1, t2, p1, p2) {
+	return 6/(m*l*l) * (8 * p2 - 3*Math.cos(t1 - t2) * p1)/(16 - 9*Math.cos(t1 - t2)*Math.cos(t1 - t2));
+}
+
+function j(t1, t2, p1, p2) {
+	return -0.5*m*l*l * (f(t1, t2, p1, p2)*g(t1, t2, p1, p2)*Math.sin(t1 - t2) + 3*gr/l*Math.sin(t1));
+}
+
+function k(t1, t2, p1, p2) {
+	return -0.5*m*l*l * (-1*f(t1, t2, p1, p2)*g(t1, t2, p1, p2)*Math.sin(t1 - t2) + gr/l*Math.sin(t2));
+}
+```
+
+The next step is to create our RK4 method function. This function will take 4 inputs: $\theta_1$, $\theta_2$, $p_1, and $p_2$.
+It will then do the computation explained above and return 4 outputs, the new values for $\theta_1$, $\theta_2$, $p_1$,
+and $p_2$ after taking a step $h$. To do this, we can make the function take an array of 4 values as an input, and then
+return an array of 4 values at the end. This way, we can directly feed the functions output back to it as input and get
+points at farther steps.
+
+```js
+// inits is an array of [t1, t2, p1, p2] each one having some initial condition value
+function RK4(inits) {
+	const t1 = inits[0];
+	const t2 = inits[1];
+	const p1 = inits[2];
+	const p2 = inits[3];
+
+	const h = 0.08;
+
+	const k0 = h*f(t1, t2, p1, p2);
+	const l0 = h*g(t1, t2, p1, p2);
+	const m0 = h*j(t1, t2, p1, p2);
+	const n0 = h*k(t1, t2, p1, p2);
+
+	const k1 = h*f(t1 + 0.5*k0, t2 + 0.5*l0, p1 + 0.5*m0, p2 + 0.5*n0);
+	const l1 = h*g(t1 + 0.5*k0, t2 + 0.5*l0, p1 + 0.5*m0, p2 + 0.5*n0);
+	const m1 = h*j(t1 + 0.5*k0, t2 + 0.5*l0, p1 + 0.5*m0, p2 + 0.5*n0);
+	const n1 = h*k(t1 + 0.5*k0, t2 + 0.5*l0, p1 + 0.5*m0, p2 + 0.5*n0);
+
+	const k2 = h*f(t1 + 0.5*k1, t2 + 0.5*l1, p1 + 0.5*m1, p2 + 0.5*n1);
+	const l2 = h*g(t1 + 0.5*k1, t2 + 0.5*l1, p1 + 0.5*m1, p2 + 0.5*n1);
+	const m2 = h*j(t1 + 0.5*k1, t2 + 0.5*l1, p1 + 0.5*m1, p2 + 0.5*n1);
+	const n2 = h*k(t1 + 0.5*k1, t2 + 0.5*l1, p1 + 0.5*m1, p2 + 0.5*n1);
+
+	const k3 = h*f(t1 + k2, t2 + l2, p1 + m2, p2 + n2);
+	const l3 = h*g(t1 + k2, t2 + l2, p1 + m2, p2 + n2);
+	const m3 = h*j(t1 + k2, t2 + l2, p1 + m2, p2 + n2);
+	const n3 = h*k(t1 + k2, t2 + l2, p1 + m2, p2 + n2);
+
+	// new values nt1, nt2, np1, and np2
+	const nt1 = t1 + 1/6 * (k0 + 2*k1 + 2*k2 + k3);
+	const nt2 = t2 + 1/6 * (l0 + 2*l1 + 2*l2 + l3);
+	const np1 = p1 + 1/6 * (m0 + 2*m1 + 2*m2 + m3);
+	const np2 = p2 + 1/6 * (n0 + 2*n1 + 2*n2 + n3);
+
+	return [nt1, nt2, np1, np2];
+}
+```
+We now have our code to solve the system of ODEs. The next step is to draw the solution.
+
+## Drawing
+
+To draw the double pendulums (or two rods really in our simplified case) we will use the p5.js library. Let's create an
+`index.html` file. Add,
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Double Pendulum</title>
+		<style>
+			body {
+				padding: 0;
+				margin: 0;
+			}
+		</style>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
+		<script src="sketch.js"></script>
+	</head>
+	<body>
+	</body>
+</html>
+```
+Now, create a `sketch.js` file. In this file we will add the code to draw the pendulums. The setup is just initializing
+the canvas:
+```js
+function setup() {
+	createCanvas(400, 400);
+}
+```
+The `draw` function is the function that is called every frame and draws on the canvas. There are 4 things to draw: First
+pendulum, second pendulum, line connecting the origin to the first pendulum, and the line connecting the first pendulum to
+the second pendulum. Note that the velocity dictating the behaviour of our pendulums comes from our RK4 method. So we need
+to call that first.
+
+For initial conditions, let's say that our pendulums both start fully horizontal. That is, $\theta_1 = \frac{\pi}{2}$
+and $\theta_2 = \frac{\pi}{2}$. Then,
+```js
+let inits = [Math.PI/2, Math.PI/2, 0, 0];
+
+function draw() {
+	background(220);
+
+	inits = RK4(inits);
+	const t1 = init[0];
+	const t2 = init[1];
+
+	// using trigonometry to convert angles to cartesian coordinates
+	// offset 200 to put the origin in middle of the canvas
+	let x1 = l * Math.sin(t1) + 200;
+	let y1 = -l * Math.cos(t1) + 200;
+	
+	let x2 = l * Math.sin(t2) + x1;
+	let y2 = -l * Math.cos(t2) + x2;
+
+	// draw the line from origin to the first pendulum
+	line(200, 200, x1, y1);
+	// draw the first pendulum
+	fill(color(255, 0, 0));
+	circle(x1, y1, 10);
+	// draw the line from first pendulum to the second pendulum
+	line(x1, y1, x2, y2);
+	// draw the second pendulum
+	fill(color(0, 0, 255));
+	circle(x2, y2, 10);
+}
+```
+
+And now you have a double pendulum system. You can also add traces, like the ones on the screen. You can see the full code
+for that on my [GitHub](https://github.com/AryanAb/DoublePendulum).
+
+## Closing Notes
+
+There are so many fun experiments that you can do with this. If you want a physics exercise, you can solve this for the
+general case when the masses and lengths are different. Or you can add a third pendulum and solve the Lagrangian for that.
+If you want some fun with numerical computation, you can replace RK4 method with other ways of solving ODEs numerically,
+and put them next to each other (planning to do that next myself!). The possibilities are endless. Pick one, and have fun.
 
 export default ({children}) => <Post meta={meta}>{children}</Post>;

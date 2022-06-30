@@ -18,6 +18,7 @@ const configuration = {
           /** @type {import('@mdx-js/loader').Options} */
           options: {
             /* jsxImportSource: …, otherOptions… */
+            providerImportSource: "@mdx-js/react",
             remarkPlugins: [remarkPrism, remarkMath],
             rehypePlugins: [rehypeMathjax]
           },

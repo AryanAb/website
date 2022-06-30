@@ -107,7 +107,11 @@ const DoublePendulum = () => {
 		}
 	}
 
-	return (<ReactP5Wrapper sketch={sketch} />);
+	return (
+		<div style={{display: 'flex', justifyContent: 'center'}}>
+			<ReactP5Wrapper sketch={sketch} />
+		</div>
+	);
 
 }
 

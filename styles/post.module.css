@@ -26,6 +26,17 @@
 }
 
 @media screen and (max-width: 790px) {
+	.article {
+		width: 92%;
+		height: 150vh;
+		background-color: #fff;
+		margin-left: 4%;
+		margin-right: 4%;
+		height: auto;
+	}
+}
+
+@media screen and (max-width: 790px) {
 	.sidenav {
 		display: none;
 	}
