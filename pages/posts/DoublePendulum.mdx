@@ -4,7 +4,7 @@ export const meta = {
 	"authors": ["Aryan Abed-Esfahani"],
 	"summary": "In this blog post you will see how to create a simple animation of the famous double pendulum system. You might also learn some physics and ODEs along the way.",
 	"date": "2022-06-29",
-	"sections": ["Introduction", "The Physics", "RK4 Method", "Drawing", "Closing Notes"]
+	"sections": ["Introduction", "The Physics", "RK4 Method", "Drawing", "Closing Notes", "Acknowledgments"]
 }
 
 import Post from '../../components/Post'
@@ -331,5 +331,10 @@ There are so many fun experiments that you can do with this. If you want a physi
 general case when the masses and lengths are different. Or you can add a third pendulum and solve the Lagrangian for that.
 If you want some fun with numerical computation, you can replace RK4 method with other ways of solving ODEs numerically,
 and put them next to each other (planning to do that next myself!). The possibilities are endless. Pick one, and have fun.
+
+## Acknowledgments
+
+I would like to thank professor Hachisuka and CS 370 course staff. They provided me with enough knowledge to be able to
+create this project from scratch. Without them, this project would have taken significantly longer.
 
 export default ({children}) => <Post meta={meta}>{children}</Post>;
