@@ -28,14 +28,14 @@ const ProjectCard = ({ image, title, creators, technologies, description, links 
           <Image src={image} layout="fill" />
         </div>
         <div className={projectStyles.info}>
-          <h4 className={projectStyles.technologies}>
+          <div className={projectStyles.technologies}>
             <h3 className={projectStyles.title}>{title}</h3>
             <p className={projectStyles.creators}>{creators.map(creator => <span className={projectStyles.creator}>{creator}</span>)}</p>
-            <p style={{ marginTop: 5, marginBottom: 8 }}>
-              Technologies Used:
+            <h4 style={{display: 'inline-block', marginTop: 5, marginBottom: 0}}>Technologies Used:</h4>
+            <h4 style={{display: 'inline-block', marginTop: 0, marginBottom: 10}}>
               {technologies.map(tech => <span className={projectStyles.technology}>{tech}</span>)}
-            </p>
-          </h4>
+            </h4>
+          </div>
           <p style={{ marginTop: 0 }}>{description}</p>
           {links.map(link => <a className={projectStyles.links} href={link.href}>{link.name}</a>)}
         </div>

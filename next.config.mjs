@@ -6,6 +6,10 @@ import rehypeMathjax from "rehype-mathjax";
 const configuration = {
   // Support MDX files as pages:
   pageExtensions: ["md", "mdx", "tsx", "ts", "jsx", "js"],
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
   // Support loading `.md`, `.mdx`:
   webpack(config, options) {
     config.module.rules.push({

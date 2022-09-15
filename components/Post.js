@@ -22,6 +22,7 @@ const Post = ({ children, meta }) => {
     <MDXProvider components={components}>
       <Head>
         <link rel="stylesheet" href="https://unpkg.com/dracula-prism/dist/css/dracula-prism.css" />
+        {/* <link rel="stylesheet" href="https://unpkg.com/prism-themes@1.9.0/themes/prism-vsc-dark-plus.css" /> */}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossOrigin="anonymous" />
 
 
@@ -36,7 +37,7 @@ const Post = ({ children, meta }) => {
       </Head>
         <ScrollIndicator />
         <div className={postStyles.wrapper}>
-          <div className={postStyles.sidenav}>
+          <nav className={postStyles.sidenav}>
             <ul>
               <li key="backToWebsite" style={{ paddingLeft: 0, display: "flex", justifyContent: 'center' }}><Link href="/">🔙 Back to Website</Link></li>
               <li key="separator" className={postStyles.separator} />
@@ -44,10 +45,12 @@ const Post = ({ children, meta }) => {
               <li key="toc" className={postStyles.subheader}>Table of Contents</li>
               {meta.sections.map(section => <li key={section} className={postStyles.sections}><a style={{ margin: 0, display: 'block', width: '100%', height: '100%' }} href={`#${section.replace(' ', '_')}`}>{section}</a></li>)}
             </ul>
-          </div>
-          <article className={postStyles.article}>
-            {children}
-          </article>
+          </nav>
+          <main>
+            <article className={postStyles.article}>
+              {children}
+            </article>
+          </main>
         </div>
     </MDXProvider>
   );
