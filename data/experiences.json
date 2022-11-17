@@ -4,9 +4,18 @@
 			"company": "Capital One",
 			"image": "/images/C1.png",
 			"role": "Software Engineer Intern",
+			"duration": "Sept. 2022 - Dec. 2022",
+			"summary": [
+				"Automating API creating on Capital One's mobile application edge service."
+			]
+		},
+		{
+			"company": "Capital One",
+			"image": "/images/C1.png",
+			"role": "Software Engineer Intern",
 			"duration": "Jan. 2022 - Apr. 2022",
 			"summary": [
-				"Working with <strong>AWS</strong> services such as <strong>lambda</strong> and <strong>DynamoDB</strong> to manage infrastructure for other teams at Capital One by creating easy-to-use scripts and applications using <strong>Python</strong> and <strong>AWS SDK</strong>.",
+				"Worked with <strong>AWS</strong> services such as <strong>lambda</strong> and <strong>DynamoDB</strong> to manage infrastructure for other teams at Capital One by creating easy-to-use scripts and applications using <strong>Python</strong> and <strong>AWS SDK</strong>.",
 				"Using <strong>DevOps</strong> best practices by contributing to the <strong>Infrastructure as Code</strong> foundation, which runs Capital One Canada's operations."
 			]
 		},
