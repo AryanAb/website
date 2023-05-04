@@ -4,7 +4,10 @@
 			"company": "Super.com",
 			"image": "/images/Super_com_Logo.jpg",
 			"role": "Software Engineer Intern",
-			"duration": "May 2023 - Aug. 2023"
+			"duration": "May 2023 - Aug. 2023",
+			"summary": [
+				"Working on internal tools."
+			]
 		},
 		{
 			"company": "Capital One",
@@ -12,7 +15,7 @@
 			"role": "Software Engineer Intern",
 			"duration": "Sep. 2022 - Dec. 2022",
 			"summary": [
-				"Automating API creating on Capital One's mobile application edge service."
+				"Automated API creation on Capital One's mobile application edge service."
 			]
 		},
 		{
