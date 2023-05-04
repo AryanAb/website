@@ -8,22 +8,28 @@ export async function getStaticProps() {
   const postsData = await getSortedPostsData();
   return {
     props: {
-      postsData
-    }
-  }
+      postsData,
+    },
+  };
 }
 
 const postsPage = ({ postsData }) => {
   return (
     <>
       <Head>
-        <title> Posts | Aryan Abed-Esfahani </title>
+        <title> Posts | Ari Abed-Esfahani </title>
 
         <meta property="og:title" content="Aryan Abed-Esfahani" />
-        <meta property="og:url" content="https://website-aryanab.vercel.app/posts" />
+        <meta
+          property="og:url"
+          content="https://website-aryanab.vercel.app/posts"
+        />
         <meta property="og:image" content="/images/fun.jpg" />
         <meta property="og:type" content="website" />
-        <meta property="og:description" content="See a full list of my blog posts and read them if you want :)" />
+        <meta
+          property="og:description"
+          content="See a full list of my blog posts and read them if you want :)"
+        />
       </Head>
 
       <body>

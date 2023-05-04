@@ -8,21 +8,27 @@ export async function getStaticProps() {
   const projectsData = getProjectsData().projects;
   return {
     props: {
-      projectsData
-    }
-  }
+      projectsData,
+    },
+  };
 }
 
 const ProjectsPage = ({ projectsData }) => (
   <>
     <Head>
-      <title> Projects | Aryan Abed-Esfahani </title>
+      <title> Projects | Ari Abed-Esfahani </title>
 
-      <meta property="og:title" content="Aryan Abed-Esfahani" />
-      <meta property="og:url" content="https://website-aryanab.vercel.app/projects" />
+      <meta property="og:title" content="Ari Abed-Esfahani" />
+      <meta
+        property="og:url"
+        content="https://website-aryanab.vercel.app/projects"
+      />
       <meta property="og:image" content="/images/fun.jpg" />
       <meta property="og:type" content="website" />
-      <meta property="og:description" content="See the full list of my projects, the tech stack I used to make them, and a brief summary." />
+      <meta
+        property="og:description"
+        content="See the full list of my projects, the tech stack I used to make them, and a brief summary."
+      />
     </Head>
 
     <body>
