@@ -19,11 +19,10 @@ const AboutMe = () => {
       </animated.div>
       <animated.p className={aboutmeStyle.paragraph} style={parAnim}>
         Hello. My name is Ari. I am a Computer Science student at the University
-        of Waterloo in second year. I am experienced with web development and
-        DevOps. I am currently working on Congreco, a mobile app designed for
-        managing public and private events. At the time being I am looking for
-        an internship for Summer 2023. I am interested in pursuing research
-        after I graduate.
+        of Waterloo in my third year. I am experienced with web development,
+        DevOps, and low level programming. I am currently looking for an
+        internship for Winter or Summer 2024. At the time being I am working on
+        Congreco, a mobile app designed for managing public and private events.
       </animated.p>
     </div>
   );
