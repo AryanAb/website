@@ -28,6 +28,10 @@
 	margin-right: 20px;
 }
 
+.bannerMobile {
+	display: none;
+}
+
 .info {
 	width: 80%;
 }
@@ -71,7 +75,11 @@
 	}
 
 	.banner {
-		display: none; /* TODO: Figure out if I ca display the image on the top still */
+		display: none;
+	}
+
+	.bannerMobile {
+		display: block;
 		align-self: center;
 		width: 66vw;
 		height: 44vw;

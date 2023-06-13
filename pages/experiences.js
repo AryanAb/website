@@ -19,9 +19,9 @@ const ExperiencesPage = ({ experiences }) => {
   return (
     <>
       <Head>
-        <title> Experiences | Ari Abed-Esfahani </title>
+        <title> Experiences | Ari Abed </title>
 
-        <meta property="og:title" content="Ari Abed-Esfahani" />
+        <meta property="og:title" content="Ari Abed" />
         <meta
           property="og:url"
           content="https://website-aryanab.vercel.app/experiences"

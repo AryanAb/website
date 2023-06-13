@@ -1,0 +1,60 @@
+.container {
+	padding-left: 10px;
+	border-style: solid;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-right-width: 0;
+	border-left-width: 0;
+	margin-top: 10px;
+}
+
+.interaction {
+	padding: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.interaction:hover {
+	background-color: rgba(125, 125, 125, 0.2);
+}
+
+.interaction:active {
+	background-color: rgba(125, 125, 125, 0.4);
+}
+
+.name {
+	resize: none;
+	width: 25%;
+	height: 30px;
+	font-size: 18px;
+	margin-bottom: 3px;
+}
+
+.textarea {
+	resize: vertical;
+	width: 100%;
+	height: 15vh;
+	font-size: 18px;
+	margin-bottom: 5px;
+}
+
+.button {
+	background-color: rgba(76, 175, 80, 0.80);
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 10px;
+}
+
+.button:hover {
+	background-color: rgba(76, 175, 80, 0.90);
+}
+
+.button:active {
+	background-color: rgba(76, 175, 80, 1.0);
+}

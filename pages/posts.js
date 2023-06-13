@@ -17,9 +17,9 @@ const postsPage = ({ postsData }) => {
   return (
     <>
       <Head>
-        <title> Posts | Ari Abed-Esfahani </title>
+        <title> Posts | Ari Abed </title>
 
-        <meta property="og:title" content="Aryan Abed-Esfahani" />
+        <meta property="og:title" content="Aryan Abed" />
         <meta
           property="og:url"
           content="https://website-aryanab.vercel.app/posts"

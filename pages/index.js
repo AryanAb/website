@@ -42,7 +42,7 @@ const Home = ({
 }) => (
   <>
     <Head>
-      <title>Ari Abed-Esfahani</title>
+      <title>Ari Abed</title>
       <link rel="shortcut icon" href="/images/fun.jpg" />
 
       <link
@@ -57,7 +57,7 @@ const Home = ({
         rel="stylesheet"
       />
 
-      <meta property="og:title" content="Ari Abed-Esfahani" />
+      <meta property="og:title" content="Ari Abed" />
       <meta property="og:url" content="https://website-aryanab.vercel.app/" />
       <meta property="og:image" content="/images/fun.jpg" />
       <meta property="og:type" content="website" />

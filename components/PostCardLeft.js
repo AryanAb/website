@@ -25,7 +25,7 @@ const PostCardLeft = ({ id, image, title, authors, summary, date }) => {
       <animated.div style={cardsAnim}>
         <Link href={`posts/${id}`}>
           <div className={postsStyles.container}>
-            <div className={postsStyles.banner}>
+            <div className={postsStyles.banner} style={{ display: "block" }}>
               <img src={image} layout="fill" />
             </div>
 

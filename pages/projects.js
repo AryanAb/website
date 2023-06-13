@@ -16,9 +16,9 @@ export async function getStaticProps() {
 const ProjectsPage = ({ projectsData }) => (
   <>
     <Head>
-      <title> Projects | Ari Abed-Esfahani </title>
+      <title> Projects | Ari Abed </title>
 
-      <meta property="og:title" content="Ari Abed-Esfahani" />
+      <meta property="og:title" content="Ari Abed" />
       <meta
         property="og:url"
         content="https://website-aryanab.vercel.app/projects"

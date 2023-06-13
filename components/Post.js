@@ -6,6 +6,7 @@ import Link from "next/link";
 import Head from "next/head";
 import { MDXProvider } from "@mdx-js/react";
 import { H1, H2, H3, H4, P, Img } from "./PostParts";
+import CommentSection from "./CommentSection";
 
 const Post = ({ children, meta }) => {
   const components = {
@@ -87,10 +88,50 @@ const Post = ({ children, meta }) => {
                 </a>
               </li>
             ))}
+            <hr
+              style={{
+                color: "rgba(0, 0, 0, 0.7)",
+                marginLeft: "15px",
+                marginRight: "15px",
+              }}
+            />
+            <li key="other" className={postStyles.subheader}>
+              Other
+            </li>
+            <li key="comments" className={postStyles.sections}>
+              <a
+                style={{
+                  margin: 0,
+                  display: "block",
+                  width: "100%",
+                  height: "100%",
+                }}
+                href="#Comments"
+              >
+                Comments
+              </a>
+            </li>
+            {/* <li key="comments" className={postStyles.sections}>
+              <a
+                style={{
+                  margin: 0,
+                  display: "block",
+                  width: "100%",
+                  height: "100%",
+                }}
+                href="#citation"
+              >
+                Citation
+              </a>
+            </li> */}
           </ul>
         </nav>
-        <main>
+        <main className={postStyles.main}>
           <article className={postStyles.article}>{children}</article>
+
+          <hr />
+
+          <CommentSection name={meta.title} />
         </main>
       </div>
     </MDXProvider>

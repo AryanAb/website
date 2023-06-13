@@ -25,6 +25,10 @@ const PostCardRight = ({ id, image, title, authors, summary, date }) => {
       <animated.div style={cardsAnim}>
         <Link href={`posts/${id}`}>
           <div className={postsStyles.container}>
+            <div className={postsStyles.bannerMobile}>
+              <img src={image} layout="fill" />
+            </div>
+
             <div className={postsStyles.info}>
               <div
                 className={postsStyles.row}

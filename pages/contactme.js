@@ -7,9 +7,9 @@ import Head from "next/head";
 const ContactMe = () => (
   <>
     <Head>
-      <title> Contact Me | Ari Abed-Esfahani </title>
+      <title> Contact Me | Ari Abed </title>
 
-      <meta property="og:title" content="Ari Abed-Esfahani" />
+      <meta property="og:title" content="Ari Abed" />
       <meta
         property="og:url"
         content="https://website-aryanab.vercel.app/contactme"
