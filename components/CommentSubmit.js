@@ -2,13 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import commentStyles from "../styles/comment.module.css";
 
-const CommentSubmit = ({ name, comments, comment }) => {
+const CommentSubmit = ({ name, comments, comment, getComments }) => {
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
-
-  useEffect(() => {
-    console.log(name);
-  }, []);
 
   const handleAuthor = (e) => {
     e.persist();
@@ -20,7 +16,7 @@ const CommentSubmit = ({ name, comments, comment }) => {
     setContent(e.target.value);
   };
 
-  const submitComment = () => {
+  const submitComment = async () => {
     const obj = {
       author,
       content,
@@ -33,27 +29,33 @@ const CommentSubmit = ({ name, comments, comment }) => {
       } else {
         comment.children = [obj];
       }
-      console.log(comments);
     } else {
       comments.unshift(obj);
     }
-    axios.post("http://aryabed.com/api/comment", {
+    await axios.put("/api/comment", {
       post: name,
       comments,
     });
-    // location.reload();
+    axios.post("https://formspree.io/f/xzbqnrod", {
+      data: { message: `You hav a new comment on ${name}` },
+    });
+    getComments();
+    setAuthor("");
+    setContent("");
   };
 
   return (
     <div>
       <textarea
         className={commentStyles.name}
+        placeholder="Name"
         required
         onChange={handleAuthor}
         value={author}
       />
       <textarea
         className={commentStyles.textarea}
+        placeholder="Please write your comment here"
         required
         onChange={handleContent}
         value={content}

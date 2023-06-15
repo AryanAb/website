@@ -6,28 +6,39 @@ import axios from "axios";
 const CommentSection = ({ name }) => {
   const [comments, setComments] = useState([]);
 
+  const getComments = async () => {
+    const res = await axios.get(`/api/comment?post=${name}`);
+    if (res.data.comments == null) {
+      await axios.post("/api/comment", {
+        post: name,
+      });
+      setComments([]);
+      return;
+    }
+    setComments(res.data.comments.comments);
+  };
+
   useEffect(() => {
-    async function getComments() {
-      const res = await axios.get(
-        `http://aryabed.com/api/comment?post=${name}`
-      );
-      setComments(res.data.comments.comments);
-    }
-    async function purge() {
-      const res = await axios.delete(
-        `http://localhost:3000/api/comment?post=${name}`
-      );
-    }
-    // purge();
     getComments();
   }, []);
 
   return (
-    <div>
+    <div style={{ marginBottom: 10 }}>
       <h2 id="Comments">Comments</h2>
 
-      <CommentSubmit name={name} comments={comments} comment={null} />
-      <Comments name={name} comments={comments} margin={10} topLevel />
+      <CommentSubmit
+        name={name}
+        comments={comments}
+        comment={null}
+        getComments={getComments}
+      />
+      <Comments
+        name={name}
+        comments={comments}
+        margin={10}
+        getComments={getComments}
+        topLevel
+      />
     </div>
   );
 };

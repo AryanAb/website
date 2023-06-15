@@ -10,14 +10,14 @@ export default async function handler(req, res) {
     const comments = await kv.hgetall(post);
 
     return res.status(200).json({ comments });
-  } else if (req.method === "POST") {
+  } else if (req.method === "PUT") {
     const post = hashify(req.body.post);
     const comments = req.body.comments;
     await kv.hset(post, { comments });
 
     return res.status(200).json({});
-  } else if (req.method == "DELETE") {
-    const post = hashify(req.query.post);
+  } else if (req.method == "POST") {
+    const post = hashify(req.body.post);
     await kv.hset(post, { comments: [] });
   }
 }

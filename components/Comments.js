@@ -3,12 +3,12 @@ import axios from "axios";
 import CommentSubmit from "./CommentSubmit";
 import commentStyles from "../styles/comment.module.css";
 
-const Comments = ({ name, comments, margin, topLevel }) => {
+const Comments = ({ name, comments, margin, getComments, topLevel }) => {
   const [replies, setReplies] = useState(Array(comments.length).fill(false));
 
   async function like(comment) {
     comment.likes += 1;
-    await axios.post("http://aryabed.com/api/comment", {
+    await axios.put("/api/comment", {
       post: name,
       comments,
     });
@@ -71,6 +71,7 @@ const Comments = ({ name, comments, margin, topLevel }) => {
                 name={name}
                 comments={comments}
                 comment={comment}
+                getComments={getComments}
               />
             </div>
           )}
@@ -79,6 +80,7 @@ const Comments = ({ name, comments, margin, topLevel }) => {
               name={name}
               comments={comment.children}
               margin={margin + 2}
+              getComments={getComments}
             />
           )}
         </div>
