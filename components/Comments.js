@@ -12,7 +12,7 @@ const Comments = ({ name, comments, margin, getComments, topLevel }) => {
       post: name,
       comments,
     });
-    location.reload();
+    getComments();
   }
 
   return (
