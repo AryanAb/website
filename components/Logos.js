@@ -57,7 +57,7 @@ const Logos = () => (
     </li>
     <li>
       {" "}
-      <a href="https://www.linkedin.com/in/aryanabed/" target="_blank">
+      <a href="https://www.linkedin.com/in/ariabed/" target="_blank">
         {" "}
         <div className={logosStyle.container}>
           {" "}
