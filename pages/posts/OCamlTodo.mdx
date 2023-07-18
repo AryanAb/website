@@ -19,7 +19,7 @@ import {ImgExtra} from '../../components/PostParts';
 
 In this blog post, I will be creating a simple to-do app using OCaml. We will explore the quirks of OCaml and see
 why it remainds a popular language in the world of academia. We will also see how modern OCaml is written by
-leverging the power of the `Core` library and the dune build tool.
+leverging the power of the `Core` library and the Dune build tool.
 
 ## Defining Functionality
 
@@ -28,7 +28,7 @@ We also want to be able to view the items added so we know what's next. Finally,
 once we're done with the task.
 
 Thus our desired functionalities could be separated into three distinct categories: view, add, remove. Taking
-inspiration from existing CLI tool, we can define the sytax as follows:
+inspiration from existing CLI tool, we can define the syntax as follows:
 
 ```bash
 $ todo add <TASK>
@@ -56,9 +56,9 @@ Task Three
 
 ### Set Up
 
-To buid this tool, we will use [dune](https://dune.build/). Dune is an OCaml build tool and is quite easy to use.
+To buid this tool, we will use [Dune](https://dune.build/). Dune is an OCaml build tool and is quite easy to use.
 It uses S-expressions for configuration, which makes it very simple to read. First we create the project wide
-`dune-project` file. Our case is very simple; we just need a dune version and name:
+`dune-project` file. Our case is very simple; we just need a Dune version and name:
 
 ```lisp
 (lang dune 3.6)
@@ -86,10 +86,9 @@ the basic parser for our CLI tool. The `~summary` and `~readme` arguments are st
 when our CLI tool is ran with the `-help` flag. It should be self explanatory what these string values should be. 
 
 `Command.basic` takes another argument and that is used to define the arguments to our CLI.
-We want our CLI to accept one argument which will be the type, and a second argument that is needed if we
-are doing the add or remove operations. Thus, we have one required positional argument and one optional positional
-argument. Positional arguments are defined using `anon`. Optional arguments are defined using `maybe`. So, we would
-write something like below in `todo.ml`:
+We want our CLI to accept one required positional element, the command type, and one optional positional argument for
+additional information to add or remove operations" Positional arguments are defined using `anon`. 
+Optional arguments are defined using `maybe`. So, we would write something like below in `todo.ml`:
 
 ```ocaml
 open Core
@@ -105,10 +104,9 @@ let command =
   fun () -> do_command command_type params)
 ```
 
-You could ignore `do_command` for now, it's a function to handle our parameters and we will get to it in a bit. In
-the code aboce, `command_type` has type `string`, as specified. However, note that the presence of `maybe` turns
-`params` into an `string option`. This might lead to some confusion because the type specified in `Command.basic`
-should still remain `string`.
+You could ignore `do_command` for now (it's a function to handle our parameters and we will get to it in a bit). In
+the code above, `command_type` has type `string`, as specified. `param` is given the type `string`, but the
+presnce of `maybe` actually turns it into an `string option`. 
 
 All that remains is to make a function that feeds the input from standard input to the `command` function. Luckily the
 `Command_unix` module makes this simple for us.
@@ -172,7 +170,7 @@ let do_command command_type params =
   | "list" -> list ()
   | "add" -> add params
   | "remove" -> remove params
-  | _ -> Stdio.print_line "Error: Command type not found"
+  | _ -> print_error "Command type not found"
 ```
 
 If you are familiar with Unix commands, you might want to use `ls` instead of `list` or `rm` instead of `remove`.
@@ -198,7 +196,7 @@ let list () =
 ```
 
 In the second line, we have defined a local variable called `inc` that is the file object. In the final line we close
-this file object. If you come from other imperative programming languages this should be very similar. In the third
+this file object. If you come from other imperative programming languages this should be very familiar. In the third
 line, we turn the file contents into a list of lines and use the `List.iter` function to iterate over them. The 
 `~f` paramter defines the function that we run on each of these lines, which in our case is a simple print.
 
