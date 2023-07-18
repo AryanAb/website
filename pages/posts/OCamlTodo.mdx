@@ -1,0 +1,279 @@
+export const meta = {
+	"image": "/images/ocaml-logo.png",
+	"title": "Making a To-Do Tool in OCaml",
+	"authors": ["Ari Abed"],
+	"summary": "In this blog post we will create a simple OCaml CLI tool to manage our to-do lists.",
+	"date": "2023-07-17",
+	"sections": ["Introduction", "Defining Functionality", "Code", "Closing Notes"]
+}
+
+import Post from '../../components/Post'
+import parseDate from '../../lib/parseDate';
+import {ImgExtra} from '../../components/PostParts';
+
+# {meta.title}
+
+{meta.authors.join(", ")} - {parseDate(meta.date)}
+
+## Introduction
+
+In this blog post, I will be creating a simple to-do app using OCaml. We will explore the quirks of OCaml and see
+why it remainds a popular language in the world of academia. We will also see how modern OCaml is written by
+leverging the power of the `Core` library and the dune build tool.
+
+## Defining Functionality
+
+Let us see what functionality we expect from our simple CLI tool. Firstly, we want to add new tasks to our to-do list.
+We also want to be able to view the items added so we know what's next. Finally, we want to remove items from our list
+once we're done with the task.
+
+Thus our desired functionalities could be separated into three distinct categories: view, add, remove. Taking
+inspiration from existing CLI tool, we can define the sytax as follows:
+
+```bash
+$ todo add <TASK>
+$ todo remove <NUMBER>
+$ todo list
+```
+
+For example, a sample usage of our CLI tool would look like this:
+
+```bash
+$ todo add "Task One"
+$ todo add "Task Two"
+$ todo add "Task Three"
+$ todo list
+Task One
+Task Two
+Task Three
+$ todo remove 2
+$ todo list
+Task One
+Task Three
+```
+
+## Code
+
+### Set Up
+
+To buid this tool, we will use [dune](https://dune.build/). Dune is an OCaml build tool and is quite easy to use.
+It uses S-expressions for configuration, which makes it very simple to read. First we create the project wide
+`dune-project` file. Our case is very simple; we just need a dune version and name:
+
+```lisp
+(lang dune 3.6)
+(name todo)
+```
+
+We also need to define our `dune` files. Fortunately, our project is simple enough to only require one. In this file
+we will define the libraries and pre-processors that we use.
+
+```lisp
+(executable
+  (name todo)
+  (libraries core core_unix.command_unix)
+  (preprocess
+    (pps ppx_jane)))
+```
+
+To build the code you could run `dune build`. To run the program you could run `./_build/default/todo.exe`.
+
+### Creating CLI Parser
+
+Let's start by writing the basics of our CLI. To do this, we will use the `Command` module. The `Command` module is
+defined inside `Core` and so we must open that module first. We could use the `Command.basic` function to create
+the basic parser for our CLI tool. The `~summary` and `~readme` arguments are strings and are only displayed 
+when our CLI tool is ran with the `-help` flag. It should be self explanatory what these string values should be. 
+
+`Command.basic` takes another argument and that is used to define the arguments to our CLI.
+We want our CLI to accept one argument which will be the type, and a second argument that is needed if we
+are doing the add or remove operations. Thus, we have one required positional argument and one optional positional
+argument. Positional arguments are defined using `anon`. Optional arguments are defined using `maybe`. So, we would
+write something like below in `todo.ml`:
+
+```ocaml
+open Core
+
+let command =
+  Command.basic
+  ~summary:"A CLI tool to manage your to-do list"
+  ~readme:(fun () -> "Extra information")
+  (let%map_open.Command
+    command_type = anon ("type" %: string) and
+    params = anon (maybe ("param" %: string)) 
+  in
+  fun () -> do_command command_type params)
+```
+
+You could ignore `do_command` for now, it's a function to handle our parameters and we will get to it in a bit. In
+the code aboce, `command_type` has type `string`, as specified. However, note that the presence of `maybe` turns
+`params` into an `string option`. This might lead to some confusion because the type specified in `Command.basic`
+should still remain `string`.
+
+All that remains is to make a function that feeds the input from standard input to the `command` function. Luckily the
+`Command_unix` module makes this simple for us.
+
+```ocaml
+let () =
+  Command_unix.run ~version:"1.0" command
+```
+
+### Declaring Functions
+
+Now that we have our basics set up, let us write the code to execute our desired functionality. As mentioned before,
+we need a function `do_command` to handle our arguments. This is the function that is responsible for seeing
+which commands to run or any basic input validation.
+
+Once `do_command` knows the user's action, it dispatches one of `list`, `add`, or `remove`, with their name being 
+indicative of their action. Since we want these functions to print to the terminal, we are only interested in their
+side effects. Therefore, none of these functions have an output. The `list` function takes no arguments. The `add` and
+`remove` function each take argument, which is `param`. As mentioned before, `param` will have type of `string option`,
+but the add functionality requires a string and the remove functionality requires an integer. To simplify things,
+we could introduce some helper functions: `add_helper` and `remove_helper`. Now these functions take a string and
+integer respctively.
+
+Finally, we define a function `print_error` that we use to display nice error messages to the terminal.
+
+With all of this info, we could write our interface file, `todo.mli`:
+
+```ocaml
+val print_error : string -> unit
+
+val list : unit -> unit
+
+val add : string option -> unit
+val add_helper : string -> unit
+
+val remove : string option -> unit
+val remove_helper : int -> unit
+
+val do_command : string -> string option -> unit
+```
+
+### Defining Functions
+
+
+To get our feet wet, let's start by imlementing `print_error`. We could utilize ANSI codes to make the "Error" appear
+in bolded red. We just write the "Error" text with the ANSI codes and use `^` to concatonate `text` to it.
+In `todo.ml`, write:
+
+```ocaml
+let print_error text =
+  Stdio.print_endline ("\027[1;38;5;196mError\027[0m: " ^ text)
+```
+
+We now define `do_command`. To write this function, we could use one of OCaml's best features, pattern matching.
+Each line of the match statement describes what value of `command_type` will result in what function to run.
+The last line is a catch-all statement, meaning that if none of the strings match, we just print an error.
+
+```ocaml
+let do_command command_type params =
+  match command_type with
+  | "list" -> list ()
+  | "add" -> add params
+  | "remove" -> remove params
+  | _ -> Stdio.print_line "Error: Command type not found"
+```
+
+If you are familiar with Unix commands, you might want to use `ls` instead of `list` or `rm` instead of `remove`.
+OCaml's pattern matching are incredibely flexible. We could add support for all of these by a simple change:
+
+```ocaml
+let do_command command_type params =
+  match command_type with
+  | "list" | "ls" -> list ()
+  | "add" -> add params
+  | "remove" | "rm" -> remove params
+  | _ -> print_error "Command type not found"
+```
+
+Let's go line by line and implement the functions mentioned. First, we have `list`. For this function we need to read
+from a file and print its values. Let's call our file `.todo`. Then in `todo.ml`:
+
+```ocaml
+let list () = 
+  let inc = In_channel.create "./.todo" in
+  List.iter (In_channel.input_lines inc) ~f:Stdio.print_endline;
+  In_channel.close inc
+```
+
+In the second line, we have defined a local variable called `inc` that is the file object. In the final line we close
+this file object. If you come from other imperative programming languages this should be very similar. In the third
+line, we turn the file contents into a list of lines and use the `List.iter` function to iterate over them. The 
+`~f` paramter defines the function that we run on each of these lines, which in our case is a simple print.
+
+Next are `add` and `remove`. They both take `param` as a paramter. If you recall, `param` has type `string option`.
+In optional types, the value is wrapped in `Some` if it is present, or the value is simply `None` if it doesn't exist.
+We could use pattern matching once again.
+
+```ocaml
+let add = function
+  | Some x -> add_helper x
+  | None -> print_error "No task provided"
+
+let remove = function
+  | Some x -> remove_helper (int_of_string x)
+  | None -> print_error "No line number provided"
+```
+
+In `add_helper` we are inputing a string, so we could just pass in the result. In `remove` however, we need to pass
+an integer, so we need to use `int_of_string` to convert from string representation to an actual integer.
+
+We just need to define our helper functions. First we write `add_helper`.
+
+```ocaml
+let add_helper itinerary =
+  let outc = Out_channel.create ~append:true "./.todo" in
+  Out_channel.fprintf outc "%s\n" itinerary;
+  Out_channel.close outc
+```
+
+You can see how the second and last lines of `add_helper` are almost identical to `list`, we are simply using an
+output channel instead of an input channel. The only notable difference is `~append:true`, which is there so we don't
+fully overwrite the existing file contents. Now on to `remove_helper`.
+
+```ocaml
+let remove_helper line_num =
+  let inc = In_channel.create "./.todo" in
+  let lines = List.filteri (In_channel.input_lines inc) ~f:(fun i _ -> i <> line_num - 1) in
+  Out_channel.write_lines "./.todo" lines;
+  In_channel.close inc
+```
+
+The second and list line should be familiar by now. We want to remove the task present on line `line_num`. To do this
+we use `filteri`, with the i at the end indicating that we could also track the index. The `~f` parameter has
+an anonymous function that takes in the index of the current line and compares it 
+`line_num - 1` (remember indexing is from 0 so we need to subtract by one). The `_` means that we disregard the second
+argument to the function. The `<>` operator might look a bit alien at first. It is just a weak not equal operator. It
+is similar to `!=` operator in some other languages, although it shouldn't be confused with OCaml's `!=` operator.
+
+Finally, let's address the case when the file `.todo` doesn't exist. For instance when running the command for the first
+time. We could write a function to check if the file exists, and if not it creates an empty file.
+
+```ocaml
+let create_file_if_needed () =
+  match Sys_unix.file_exists "./.todo" with 
+  | `No | `Unknown -> Out_channel.write_all "./.todo" ~data:""
+  | `Yes -> ()
+```
+We used pattern matching again, but we matched against a peculiar type. These are called polymorphic variants and
+are useful in multiple cases. For now it suffices to know that `file_exists` returns one of the variants mentioned in the
+code above. Now we just have to modify our code so that we run this function before we execute our CLI.
+
+```ocaml
+let () =
+  create_file_if_needed ();
+  Command_unix.run ~version:"1.0" command
+```
+
+With that, we have completed our todo CLI tool.
+You could checkout the full code on my [GitHub](https://github.com/AryanAb/ocaml-todo).
+
+## Closing Notes
+
+This is just a simple application that you could make in an hour using OCaml. OCaml provides you with power to do 
+much more. If you are interested in learning more about OCaml, and functional programming, I suggest you take a look
+at the book Real World OCaml. It is [available online](https://dev.realworldocaml.org/toc.html) and is probably the
+best source out there on modern OCaml.
+
+export default ({children}) => <Post meta={meta}>{children}</Post>;
