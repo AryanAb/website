@@ -1,0 +1,33 @@
+export const meta = {
+	"image": "/images/conway.png",
+	"title": "Conway's Game of Life",
+	"authors": ["Ari Abed"],
+	"summary": "In this blog post you will see how to create a simple animation of the famous double pendulum system. You might also learn some physics and ODEs along the way.",
+	"date": "2023-07-19",
+	"sections": ["Explanation"]
+}
+
+import Post from '../../components/Post'
+import parseDate from '../../lib/parseDate';
+import {ImgExtra} from '../../components/PostParts';
+import Conway from '../../components/Conway';
+
+# {meta.title}
+
+{meta.authors.join(", ")} - {parseDate(meta.date)}
+
+<Conway />
+
+## Explanation
+
+This post just demonstrates a simple P5.js widget for 
+[Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). If this simulation gets to a stable
+state or you are board, you could just refresh the page to see another simulation starting from a random state. 
+There are already many great discussions and guides on Conway's Game of Life available online, 
+so you could check them out.
+
+If you are curious to see my implementation of it, my code is available on my 
+[GitHub](https://github.com/AryanAb/conway-game-of-life). That version also gives you the ability to edit the grid
+by clicking on the cells.
+
+export default ({children}) => <Post meta={meta}>{children}</Post>;
