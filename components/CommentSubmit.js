@@ -37,7 +37,7 @@ const CommentSubmit = ({ name, comments, comment, getComments }) => {
       comments,
     });
     axios.post("https://formspree.io/f/xzbqnrod", {
-      data: { message: `You hav a new comment on ${name}` },
+      data: { message: `You have a new comment on ${name}` },
     });
     getComments();
     setAuthor("");

@@ -49,20 +49,6 @@ const Conway = () => {
       matrix = new_matrix;
     }
 
-    p5.mouseClicked = () => {
-      console.log(p5.mouseX, p5.mouseY);
-      if (
-        p5.mouseX > 0 &&
-        p5.mouseX < SIDE_LENGTH &&
-        p5.mouseY > 0 &&
-        p5.mouseY < SIDE_LENGTH
-      ) {
-        const i = Math.floor(p5.mouseX / GRID_LENGTH);
-        const j = Math.floor(p5.mouseY / GRID_LENGTH);
-        matrix[i][j] = !matrix[i][j];
-      }
-    };
-
     p5.setup = () => {
       p5.createCanvas(SIDE_LENGTH, SIDE_LENGTH);
       for (let i = 0; i < NUM_GRID; i++) {
