@@ -1,12 +1,38 @@
 {
 	"experiences": [
 		{
+			"company": "Verkada",
+			"image": "/images/Verkada.png",
+			"role": "Front-End Engineer Intern",
+			"duration": "May 2024 - Aug. 2024",
+			"summary": [
+				"Migrated from legacy APIs to Elasticsearch using React-Query, decreasing page load times for 2.5 million users by 40%",
+				"Introduced optimistic cache updates for all mutation API calls, eliminating up to 3 seconds of latency in updates}",
+				"Collaborated with UI designers to develop mobile-friendly views of the React web tool used by 7900 organizations",
+				"Led the team in a company-wide initiative to deprecate a critical vulnerable service called 3.5 million times a day, enhancing security for all users"
+			]
+		},
+		{
+			"company": "Aven Financial",
+			"image": "/images/Aven.png",
+			"role": "Full-Stack Engineer Intern",
+			"duration": "Jan. 2024 - Apr. 2024",
+			"summary": [
+				"Built a mortgage refinance flow using Vue.js and TypeScript, generating an average of $1,800 in revenue per application",
+				"Created a vectorized mortgage pricing engine in Python using Pandas capable of pricing 100 applications in <600ms",
+				"Architected a mortgage brokering product in TypeScript and PostgreSQL with integration with third party lenders",
+				"Contributed to the shared UI library used by all developers, reducing duplicate code and lowering technical debt"
+			]
+		},
+		{
 			"company": "Super.com",
 			"image": "/images/Super_com_Logo.jpg",
 			"role": "Software Engineer Intern",
 			"duration": "May 2023 - Aug. 2023",
 			"summary": [
-				"Working on internal tools."
+				"Applied concurrency techniques to Python code and reduced Redis update times from 15 minutes down to 2 minutes",
+				"Added a temporary ID system for hotels by hooking React to Redis, allowing agents to respond to 100 more calls per day",
+				"Revamped the on call system relied on by 100+ engineers during critical incidents by using Python and Slack API"
 			]
 		},
 		{
@@ -24,8 +50,8 @@
 			"role": "Software Engineer Intern",
 			"duration": "Jan. 2022 - Apr. 2022",
 			"summary": [
-				"Worked with <strong>AWS</strong> services such as <strong>lambda</strong> and <strong>DynamoDB</strong> to manage infrastructure for other teams at Capital One by creating easy-to-use scripts and applications using <strong>Python</strong> and <strong>AWS SDK</strong>.",
-				"Using <strong>DevOps</strong> best practices by contributing to the <strong>Infrastructure as Code</strong> foundation, which runs Capital One Canada's operations."
+				"Worked with AWS services such as lambda and DynamoDB to manage infrastructure for other teams at Capital One by creating easy-to-use scripts and applications using Python and AWS SDK.",
+				"Using DevOps best practices by contributing to the Infrastructure as Code foundation, which runs Capital One Canada's operations."
 			]
 		},
 		{
@@ -34,8 +60,8 @@
 			"role": "Software Developer Intern",
 			"duration": "May 2021 - Sept. 2021",
 			"summary": [
-				"Developed and maintained an internal tool used by <strong>more than 800 employees</strong> by working with <strong>Java</strong> for the back-end and <strong>XHTML</strong> and <strong>PrimeFaces</strong> framework for the web user interface.",
-				"Utilized <strong>Docker</strong> and <strong>TeamCity DevOps</strong> for multiple fast and secure deployments on servers and used <strong>Kubernetes</strong> to achieve <strong>smooth scalability and 0 downtime</strong>."
+				"Developed and maintained an internal tool used by more than 800 employees by working with Java for the back-end and XHTML and PrimeFaces framework for the web user interface.",
+				"Utilized Docker and TeamCity DevOps for multiple fast and secure deployments on servers and used Kubernetes to achieve smooth scalability and 0 downtime."
 			]
 		}
 	]
